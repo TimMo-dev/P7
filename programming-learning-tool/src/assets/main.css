@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*NavBar*/
+
+.navbar {
+    @apply relative flex flex-wrap items-center justify-between px-2 bg-gray-100 mb-5;
+}
+
+.navbar-items {
+    @apply container mx-auto flex flex-wrap items-center justify-between
+}
+
+.left-navbar-item {
+    @apply w-full relative flex justify-center lg:w-auto px-4 lg:static lg:block lg:justify-start
+}
+
+.navbar-text {
+    @apply text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black
+}
+
+.navbar-item {
+    @apply px-3 py-1 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75
+}
+
+.navbar-list {
+    @apply flex flex-col lg:flex-row list-none ml-auto
+}
+
+/*Solution Page*/
+
+.top-containers-wrapper {
+    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2
+}
+
+.top-container {
+    @apply w-1/2 bg-gray-200 p-2 flex-1
+}
+
+.top-containers-wrapper {
+    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2
+}
+
+.bottom-container {
+    @apply flex-grow bg-gray-200 m-2 p-2
+}
+
+.bottom-containers-wrapper {
+    @apply flex flex-grow h-3/4 justify-between space-x-4 p-0
+}
+
+.solution-buttons {
+    @apply flex justify-between space-x-4 p-0
+}
+
+.container-buttons {
+    @apply w-1/2 flex
+}
+
+.button {
+    @apply text-white py-1 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-400;
+}
