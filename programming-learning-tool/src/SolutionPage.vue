@@ -1,5 +1,6 @@
 <script setup>
-import Navbar from './Navbar.vue';
+import Collapsible from './components/Collapsible.vue';
+import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
@@ -32,15 +33,23 @@ import Navbar from './Navbar.vue';
         </div>
       </div>
       <!-- Right container -->
-      <div class="top-container">
+      <div class="top-container relative border-2 border-dashed border-black">
         <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
           Code Block:
         </a>
-        <div class="bg-white h-full overflow-y-auto">
-        <textarea type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
+        <div class="bg-white h-full">
+          <div class="overflow-y-auto h-full">
+            <textarea type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
+          </div>
         </div>
+          <div class="absolute bottom-4 py-2 flex space-x-0">
+              <Collapsible title="Test 1"/>
+              <Collapsible title="Test 2"/>
+              <Collapsible title="Test 3"/>
+              <Collapsible title="Test 4"/>
+          </div>
       </div>
-    </div>
+  </div>
 
     <!-- Bottom container -->
     <div class="bottom-containers-wrapper">
