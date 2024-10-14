@@ -16,6 +16,9 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
+> [!CAUTION]
+> Husk at cd ind i "programming-learning-tool" inden der køres npm kommandoer
+
 ```sh
 npm install
 ```
