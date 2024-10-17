@@ -11,7 +11,6 @@ def run_compile_request(code):
     payload = json.dumps({'code': code})
     response = requests.post(url, headers=headers, data=payload)
     
-    # Try to parse the JSON response
     try:
         return response.json()
     except json.JSONDecodeError:
