@@ -18,7 +18,7 @@ def run_compile_request(code):
         return {'output': '', 'error': 'Invalid JSON response from server'}
 
 if __name__ == '__main__':
-    file_path = './exampleCode.py'  # Replace with the path to the Python file you want to convert
+    file_path = './exampleCode.py'
     code = read_file(file_path)
     result = run_compile_request(code)
     print('Output:', result.get('output'))
