@@ -15,4 +15,6 @@ RUN chown -R pythonuser:pythongroup /code
 
 USER pythonuser
 
+EXPOSE 5000
+
 CMD ["python", "main.py"]
