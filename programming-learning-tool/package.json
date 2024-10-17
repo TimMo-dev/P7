@@ -12,9 +12,10 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "autoprefixer": "^9.8.8",
-    "postcss": "^7.0.39",
-    "vue": "^3.4.29"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "vue": "^3.4.29",
+    "vue-codemirror": "^6.1.1"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
