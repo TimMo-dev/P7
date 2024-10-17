@@ -1,15 +1,16 @@
 <script setup>
 import Collapsible from './components/Collapsible.vue';
+import GroupCollapsible from './components/GroupCollapsible.vue';
 import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-  <Navbar/>
+  <Navbar />
   <div class="min-h-screen flex flex-col">
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
       <div class="container-buttons">
-        
+
       </div>
       <div class="container-buttons">
         <div class="button">
@@ -33,36 +34,46 @@ import Navbar from './components/Navbar.vue';
         </div>
       </div>
       <!-- Right container -->
-      <div class="top-container relative border-2 border-dashed border-black">
-        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
-          Code Block:
+      <div class="top-container relative">
+        <a class="absolute font-bold leading-relaxed z-10 text-sm bg-gray-200 px-2 rounded-sm">
+          Editor:
         </a>
-        <div class="bg-white h-full">
-          <div class="overflow-y-auto h-full">
-            <textarea type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
-          </div>
-        </div>
-          <div class="absolute bottom-4 py-2 flex space-x-0">
-              <Collapsible title="Test 1"/>
-              <Collapsible title="Test 2"/>
-              <Collapsible title="Test 3"/>
-              <Collapsible title="Test 4"/>
-          </div>
-      </div>
-  </div>
-
-    <!-- Bottom container -->
-    <div class="bottom-containers-wrapper">
-      <div class="bottom-container">
-          <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
-            Feedback:
-          </a>
-          <div class="bg-white h-full overflow-y-auto">
-            <div class="mx-4 my-8">
-              test
+        <div class="flex bg-white h-full relative">
+          <div class="flex flex-col w-full">
+            <div class="absolute overflow-y-auto h-full w-full flex-grow">
+              <textarea type="text" placeholder="Your code here.."
+                class="mx-4 my-8 resize-none h-full w-5/6"></textarea>
+            </div>
+            <div class="flex-grow"></div>
+            <div label="tests" class="mr-4">
+              <GroupCollapsible :items="[
+                { title: 'Test 1', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                { title: 'Test 2', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                { title: 'Test 3', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                { title: 'Test 4', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                { title: 'Test 5', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                { title: 'Test 6', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                { title: 'Test 7', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                { title: 'Test 8', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' }
+              ]" />
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Bottom container -->
+    <div class="bottom-containers-wrapper">
+      <div class="bottom-container">
+        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
+          Feedback:
+        </a>
+        <div class="bg-white h-20 overflow-y-auto">
+          <div class="mx-4 my-8">
+            test
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
