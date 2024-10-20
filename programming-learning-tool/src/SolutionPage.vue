@@ -11,9 +11,9 @@ import Navbar from './Navbar.vue';
         
       </div>
       <div class="container-buttons">
-        <div class="button">
+        <button id="submitButton" type="button" class="button">
           Submit
-        </div>
+        </button>
         <div class="button">
           Run
         </div>
@@ -37,7 +37,9 @@ import Navbar from './Navbar.vue';
           Code Block:
         </a>
         <div class="bg-white h-full overflow-y-auto">
-        <textarea type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
+        <form id="codeForm" action="http://localhost:5000/compile" method="GET">
+        <textarea name="codeArea" type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
+        </form>
         </div>
       </div>
     </div>
