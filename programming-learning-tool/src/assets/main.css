@@ -5,7 +5,7 @@
 /*NavBar*/
 
 .navbar {
-    @apply relative flex flex-wrap items-center justify-between px-2 bg-gray-100 mb-5;
+    @apply relative flex flex-wrap items-center justify-between px-2 bg-gray-100 mb-2;
 }
 
 .navbar-items {
@@ -31,7 +31,7 @@
 /*Solution Page*/
 
 .top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2
+    @apply flex flex-grow h-3/4 justify-between space-x-4
 }
 
 .top-container {
@@ -39,15 +39,15 @@
 }
 
 .top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2
+    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2 pt-1
 }
 
 .bottom-container {
-    @apply flex-grow bg-gray-200 m-2 p-2
+    @apply flex-grow h-24 bg-gray-200 m-2 p-2
 }
 
 .bottom-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4 p-0
+    @apply flex flex-col justify-between space-x-4 p-0
 }
 
 .solution-buttons {
@@ -59,5 +59,13 @@
 }
 
 .button {
-    @apply text-white py-1 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-400;
+    @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-400;
 }
+
+.border-test {
+    @apply border-black border-dashed border-2
+}
+
+  .resizer {
+    @apply w-1 cursor-ew-resize bg-gray-50 h-full
+  }
