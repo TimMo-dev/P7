@@ -36,11 +36,11 @@ const toggleExpand = () => {
           :checked="props.isExpanded"
         />
         <span
-          class="block max-h-6 w-20 overflow-hidden rounded-t-lg bg-gray-400 pr-3 py-0 text-gray-800 shadow-lg 
+          class="block max-h-6 w-24 overflow-hidden rounded-t-lg bg-gray-400 pr-3 py-0 text-gray-800 shadow-lg 
           transition-all duration-300 ease-in-out"
-          :class="{'max-h-72 w-72': props.isExpanded}"
+          :class="{'max-h-72 w-80': props.isExpanded}"
         >
-          <h3 class="flex h-6 justify-center cursor-pointer ml-4 items-center font-bold">
+          <h3 class="flex h-6 cursor-pointer ml-4 items-center font-bold">
             {{ title }}
             <i
               class="ml-2 fas"

@@ -65,3 +65,7 @@
 .border-test {
     @apply border-black border-dashed border-2
 }
+
+  .resizer {
+    @apply w-1 cursor-ew-resize bg-gray-50 h-full
+  }

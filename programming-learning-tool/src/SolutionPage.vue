@@ -2,6 +2,7 @@
 import Collapsible from './components/Collapsible.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import Navbar from './components/Navbar.vue';
+
 </script>
 
 <template>
@@ -52,9 +53,6 @@ import Navbar from './components/Navbar.vue';
                 { title: 'Test 3', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
                 { title: 'Test 4', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
                 { title: 'Test 5', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                { title: 'Test 6', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                { title: 'Test 7', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                { title: 'Test 8', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' }
               ]" />
             </div>
           </div>
