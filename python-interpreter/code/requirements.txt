@@ -1,0 +1,5 @@
+# Template for requirements.txt - May be updated as needed
+requests
+numpy
+pytest
+Flask
