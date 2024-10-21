@@ -1,11 +1,14 @@
-#Server setup
+# Server setup
 
 Run the following commands in the 'server' directory: 
 
-- npm install express
-- npm install tsx
-- npm install cors
+```sh
+npm install express
+npm install tsx
+npm install cors
+npm install @types/express --save-dev
+```
 
-to start the server: 
+To start the server: 
 
 - npx tsx routes/server.ts

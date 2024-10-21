@@ -1,4 +1,4 @@
-(function(window, document, undefined) {
+(function(window, document) {
     
     
     window.onload = init;
@@ -13,4 +13,4 @@
       
     }
   
-  })(window, document, undefined);
+  })(window, document);
