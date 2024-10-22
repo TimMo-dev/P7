@@ -1,5 +1,30 @@
-<script setup>
+<script setup lang="ts">
+import { ref } from 'vue';  // Import ref to create a reactive variable
 import Navbar from './Navbar.vue';
+
+const serverHost:string = "http://localhost:5001";
+
+// Declare a reactive variable to store the textarea content
+const codeAreaContent = ref<string>('');
+
+const submitCode = async (): Promise<void> => {
+  try {
+    // Make a GET request to the /compile endpoint with codeAreaContent as a query parameter
+    const response = await fetch(`http://localhost:5001/compile?codeArea=${encodeURIComponent(codeAreaContent.value)}`, {
+      method: 'GET',
+    });
+
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    // You can handle the response further, like displaying it to the user
+    console.log('Compilation request was successful');
+  } catch (error) {
+    console.error('Error submitting code:', error);
+  }
+};
 </script>
 
 <template>
@@ -11,7 +36,7 @@ import Navbar from './Navbar.vue';
         
       </div>
       <div class="container-buttons">
-        <button id="submitButton" type="button" class="button">
+        <button type="button" class="button" @click="submitCode">
           Submit
         </button>
         <div class="button">
@@ -37,9 +62,7 @@ import Navbar from './Navbar.vue';
           Code Block:
         </a>
         <div class="bg-white h-full overflow-y-auto">
-        <form id="codeForm" action="http://localhost:5000/compile" method="GET">
-        <textarea name="codeArea" type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
-        </form>
+        <textarea name="codeArea" v-model="codeAreaContent" type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
         </div>
       </div>
     </div>

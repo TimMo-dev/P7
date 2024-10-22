@@ -1,12 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
-  const showMenu = ref(false);
+const showMenu = ref<boolean>(false);
 
-  const toggleNavbar = () =>
-  {
-    showMenu.value = !showMenu.value;
-  }
+const toggleNavbar = (): void => {
+  showMenu.value = !showMenu.value;
+};
 </script>
 
 <template>
