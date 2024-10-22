@@ -10,7 +10,7 @@ const codeAreaContent = ref<string>('');
 const submitCode = async (): Promise<void> => {
   try {
     // Make a GET request to the /compile endpoint with codeAreaContent as a query parameter
-    const response = await fetch(`http://localhost:5001/compile?codeArea=${encodeURIComponent(codeAreaContent.value)}`, {
+    const response = await fetch(`${serverHost}/compile?codeArea=${encodeURIComponent(codeAreaContent.value)}`, {
       method: 'GET',
     });
 
