@@ -36,9 +36,9 @@ const submitCode = async (): Promise<void> => {
 
       </div>
       <div class="container-buttons">
-        <div class="button" @click="submitCode">
+        <button type="button" class="button" @click="submitCode">
           Submit
-        </div>
+        </button>
         <div class="button">
           Run
         </div>
