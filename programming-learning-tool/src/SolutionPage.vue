@@ -36,7 +36,7 @@ const submitCode = async (): Promise<void> => {
 
       </div>
       <div class="container-buttons">
-        <div class="button">
+        <div class="button" @click="submitCode">
           Submit
         </div>
         <div class="button">
@@ -64,7 +64,7 @@ const submitCode = async (): Promise<void> => {
         <div class="flex bg-white h-full relative">
           <div class="flex flex-col w-full">
             <div class="absolute overflow-y-auto h-full w-full flex-grow">
-              <textarea type="text" placeholder="Your code here.."
+              <textarea name="codeArea" v-model="codeAreaContent" type="text" placeholder="Your code here.."
                 class="mx-4 my-8 resize-none h-full w-5/6"></textarea>
             </div>
             <div class="flex-grow"></div>
