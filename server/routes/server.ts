@@ -11,22 +11,22 @@ server.use(cors());
 server.use(express.urlencoded({ extended: true }));
 
 server.listen(port, () => {
-    console.log(`listening on port ${port}`)
-  })
+  console.log(`listening on port ${port}`)
+})
 
 server.get('/compile', (req, res) => {
   const codeArea = req.query.codeArea
-  console.log(codeArea) 
+  console.log(codeArea)
 
   const options = {
-    hostname: address,  
-    port: 5000,                     
-    path: '/compile',             
-    method: 'POST',                
+    hostname: address,
+    port: 5000,
+    path: '/compile',
+    method: 'POST',
     headers: {
-        'Content-Type': 'application/json',  
+      'Content-Type': 'application/json',
     },
-};
+  };
 
   const data = JSON.stringify({
     code: codeArea
@@ -35,24 +35,24 @@ server.get('/compile', (req, res) => {
   const forwardRequest = http.request(options, (forwardResponse) => {
     let responseData = '';
 
-   
+
     forwardResponse.on('data', (chunk) => {
-        responseData += chunk;
+      responseData += chunk;
     });
 
     forwardResponse.on('end', () => {
-        console.log('Response from container:', responseData);
+      console.log('Response from container:', responseData);
 
-        res.send({
-            message: 'Text forwarded successfully',
-            forwardedResponse: JSON.parse(responseData)
-        });
+      res.send({
+        message: 'Text forwarded successfully',
+        forwardedResponse: JSON.parse(responseData)
+      });
     });
-});
+  });
 
-    forwardRequest.write(data);
+  forwardRequest.write(data);
 
-    forwardRequest.end();
+  forwardRequest.end();
 
 
 
