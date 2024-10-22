@@ -28,12 +28,12 @@ const submitCode = async (): Promise<void> => {
 </script>
 
 <template>
-  <Navbar/>
+  <Navbar />
   <div class="min-h-screen flex flex-col">
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
       <div class="container-buttons">
-        
+
       </div>
       <div class="container-buttons">
         <button type="button" class="button" @click="submitCode">
@@ -57,12 +57,12 @@ const submitCode = async (): Promise<void> => {
         </div>
       </div>
       <!-- Right container -->
-      <div class="top-container">
-        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
-          Code Block:
+      <div class="top-container relative">
+        <a class="absolute font-bold leading-relaxed z-10 text-sm bg-gray-200 px-2 rounded-sm">
+          Editor:
         </a>
         <div class="bg-white h-full overflow-y-auto">
-        <textarea name="codeArea" v-model="codeAreaContent" type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
+        <textarea type="text" placeholder="Your code here.." class="mx-4 my-8 resize-none w-full h-full"></textarea>
         </div>
       </div>
     </div>
@@ -70,15 +70,15 @@ const submitCode = async (): Promise<void> => {
     <!-- Bottom container -->
     <div class="bottom-containers-wrapper">
       <div class="bottom-container">
-          <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
-            Feedback:
-          </a>
-          <div class="bg-white h-full overflow-y-auto">
-            <div class="mx-4 my-8">
-              test
-            </div>
+        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
+          Feedback:
+        </a>
+        <div class="bg-white h-20 overflow-y-auto">
+          <div class="mx-4 my-8">
+            test
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
