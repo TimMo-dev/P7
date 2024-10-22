@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';  // Import ref to create a reactive variable
-import Navbar from './Navbar.vue';
+import Navbar from './components/Navbar.vue';
+import GroupCollapsible from './components/GroupCollapsible.vue';
 
 const serverHost:string = "http://localhost:5001";
 
