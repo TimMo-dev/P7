@@ -1,8 +1,30 @@
 <script setup lang="ts">
-import Collapsible from './components/Collapsible.vue';
-import GroupCollapsible from './components/GroupCollapsible.vue';
-import Navbar from './components/Navbar.vue';
+import { ref } from 'vue';  // Import ref to create a reactive variable
+import Navbar from './Navbar.vue';
 
+const serverHost:string = "http://localhost:5001";
+
+// Declare a reactive variable to store the textarea content
+const codeAreaContent = ref<string>('');
+
+const submitCode = async (): Promise<void> => {
+  try {
+    // Make a GET request to the /compile endpoint with codeAreaContent as a query parameter
+    const response = await fetch(`${serverHost}/compile?codeArea=${encodeURIComponent(codeAreaContent.value)}`, {
+      method: 'GET',
+    });
+
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    // You can handle the response further, like displaying it to the user
+    console.log('Compilation request was successful');
+  } catch (error) {
+    console.error('Error submitting code:', error);
+  }
+};
 </script>
 
 <template>
