@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Collapsible from './components/Collapsible.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import Navbar from './components/Navbar.vue';

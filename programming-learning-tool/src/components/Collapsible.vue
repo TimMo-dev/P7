@@ -1,27 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-    default: 'TITLE',
-  },
-  content: {
-    type: String,
-    required: true,
-    default: 'CONTENT',
-  },
-  isExpanded: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-});
+const props = defineProps<{
+  title: string;
+  content: string;
+  isExpanded?: boolean;
+}>();
 
-const emit = defineEmits(['toggle']);
+const emit = defineEmits<{
+  (event: 'toggle'): void;
+}>();
 
-const toggleExpand = () => {
+const toggleExpand = (): void => {
   emit('toggle');
 };
 </script>

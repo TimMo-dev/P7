@@ -1,18 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import Collapsible from './Collapsible.vue';
 
-const props = defineProps({
-  items: {
-    type: Array,
-    required: true,
-    default: () => [],
-  },
-});
+interface Item {
+  title: string;
+  content: string;
+  isExpanded?: boolean;
+}
 
-const expandedIndex = ref(null);
+const props = defineProps<{
+  items: Item[]; // Define the type of items in the array
+}>();
 
-const toggleExpand = (index) => {
+const expandedIndex = ref<number | null>(null);
+
+const toggleExpand = (index: number): void => {
   expandedIndex.value = expandedIndex.value === index ? null : index;
 };
 </script>
