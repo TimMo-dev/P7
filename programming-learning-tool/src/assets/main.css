@@ -25,7 +25,7 @@
 }
 
 .navbar-list {
-    @apply flex flex-col lg:flex-row list-none ml-auto
+    @apply flex flex-col lg:flex-row list-none ml-auto items-center
 }
 
 /*Solution Page*/
