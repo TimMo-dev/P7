@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';  // Import ref to create a reactive variable
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
+import * as monaco from "monaco-editor";
 
 const serverHost:string = "http://localhost:5001";
 
@@ -26,6 +27,31 @@ const submitCode = async (): Promise<void> => {
     console.error('Error submitting code:', error);
   }
 };
+
+// Reference for the editor container
+const monacoContainer = ref<HTMLDivElement | null>(null);
+
+// Editor instance
+let editor: monaco.editor.IStandaloneCodeEditor | null = null;
+
+// Initialize the Monaco Editor when the component is mounted
+onMounted(() => {
+  if (monacoContainer.value) {
+    editor = monaco.editor.create(monacoContainer.value, {
+      value: `print("Hello, World!")`,
+      language: "python", // Specify the language (e.g., python, javascript, etc.)
+      theme: "vs-dark", // Editor theme (vs, vs-dark, hc-black)
+      automaticLayout: true,
+    });
+  }
+});
+
+// Dispose of the editor when the component is destroyed
+onBeforeUnmount(() => {
+  if (editor) {
+    editor.dispose();
+  }
+});
 </script>
 
 <template>
@@ -65,8 +91,11 @@ const submitCode = async (): Promise<void> => {
         <div class="flex bg-white h-full relative">
           <div class="flex flex-col w-full">
             <div class="absolute overflow-y-auto h-full w-full flex-grow">
-              <textarea name="codeArea" v-model="codeAreaContent" type="text" placeholder="Your code here.."
-                class="mx-4 my-8 resize-none h-full w-5/6"></textarea>
+              <div class="editor-container">
+                <div ref="monacoContainer" class="monaco-editor mx-4 my-8 resize-none h-full w-5/6"></div>
+              </div>
+              <!-- <textarea name="codeArea" v-model="codeAreaContent" type="text" placeholder="Your code here.."
+                class="mx-4 my-8 resize-none h-full w-5/6"></textarea> -->
             </div>
             <div class="flex-grow"></div>
             <div label="tests" class="mr-4">
