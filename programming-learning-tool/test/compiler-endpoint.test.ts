@@ -24,7 +24,7 @@ async function call_python_compiler_API(input: string): Promise<string> {
         }
 
         let cleaned_result:string = result.output.replace("\n", "")
-        console.log(cleaned_result);
+
         return cleaned_result; // Return the 'output' field from the response or an empty string if not present
     } catch (error) {
         return `Error calling the Python compiler API: ${error.message}`;
