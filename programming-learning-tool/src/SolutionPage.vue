@@ -12,7 +12,7 @@ const submitCode = async (): Promise<void> => {
   try {
     // Make a POST request to the /compile endpoint with codeAreaContent as a query parameter
     const response = await fetch(`${serverHost}/compile?codeArea=${encodeURIComponent(codeAreaContent.value)}`, {
-      method: 'POST',
+      method: 'GET',
     });
 
     // Check if the request was successful
@@ -26,6 +26,43 @@ const submitCode = async (): Promise<void> => {
     console.error('Error submitting code:', error);
   }
 };
+
+// Reactive state for toggling the dropdown
+const isOpen = ref<boolean>(false);
+
+// Toggle the dropdown menu
+const toggleDropdown = (): void => {
+  isOpen.value = !isOpen.value;
+};
+
+const submitLanguage = async (selectedLanguage: string): Promise<void> => {
+  try {
+    // Close the dropdown immediately after a selection is made
+    isOpen.value = false
+    // Construct the request body
+    const body = JSON.stringify({ language: selectedLanguage });
+
+    // Make a POST request to the /setLanguage endpoint with the selected language as the body
+    const response = await fetch(`${serverHost}/setLanguage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Set the content type to JSON
+      },
+      body: body,
+    });
+
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    // Optionally, handle the response further
+    const data = await response.json(); // Parse the response as JSON
+    console.log('Language submission was successful:', data);
+  } catch (error) {
+    console.error('Error submitting language:', error);
+  }
+};
 </script>
 
 <template>
@@ -33,9 +70,48 @@ const submitCode = async (): Promise<void> => {
   <div class="min-h-screen flex flex-col">
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
+      <!-- Left Top Container -->
       <div class="container-buttons">
-
+        Programming Language:
+        <div class="relative inline-block">
+          <button
+            @click="toggleDropdown"
+            id="dropdown-button"
+            class="button"
+          >
+            Select
+          </button>
+          <!-- Opens Dropdown -->
+          <div
+            v-if="isOpen"
+            class="dropdown-button"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="dropdown-button"
+          >
+            <!-- Dropdown Items --> 
+            <div class="py-1">
+              <a
+                href="#"
+                class="dropdown-item"
+                role="menuitem"
+                @click="() => { submitLanguage('Python');}"
+              >
+                Python
+              </a>
+              <a
+                href="#"
+                class="dropdown-item"
+                role="menuitem"
+                @click="() => { submitLanguage('C');}"
+              >
+                C
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- Right Top Container -->
       <div class="container-buttons">
         <button type="button" class="button" @click="submitCode">
           Submit

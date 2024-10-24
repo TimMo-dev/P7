@@ -84,7 +84,7 @@ const submitLanguage = async (selectedLanguage: string): Promise<void> => {
             <!-- Dropdown Menu -->
             <div
               v-if="isOpen"
-              class="absolute right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+              class="dropdown-button"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="dropdown-button"
@@ -92,7 +92,7 @@ const submitLanguage = async (selectedLanguage: string): Promise<void> => {
               <div class="py-1">
                 <a
                   href="#"
-                  class="block px-4 py-2 hover:bg-gray-100"
+                  class="dropdown-item"
                   role="menuitem"
                   @click="() => { submitLanguage('English');}"
                   >
@@ -100,7 +100,7 @@ const submitLanguage = async (selectedLanguage: string): Promise<void> => {
                 </a>
                 <a
                   href="#"
-                  class="block px-4 py-2 hover:bg-gray-100"
+                  class="dropdown-item"
                   role="menuitem"
                   @click="() => { submitLanguage('Dansk');}"
                   >

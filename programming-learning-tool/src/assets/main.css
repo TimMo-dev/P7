@@ -69,3 +69,12 @@
   .resizer {
     @apply w-1 cursor-ew-resize bg-gray-50 h-full
   }
+
+
+/* Dropdown menu */
+.dropdown-button {
+    @apply absolute rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 left-0
+}
+.dropdown-item {
+    @apply block px-4 py-2 hover:bg-gray-100
+}
