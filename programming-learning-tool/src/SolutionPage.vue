@@ -29,21 +29,26 @@ const submitCode = async (): Promise<void> => {
 
 // Reactive state for toggling the dropdown
 const isOpen = ref<boolean>(false);
+const selectedProgLanguage = ref<string>('Select'); // Default button text
 
 // Toggle the dropdown menu
 const toggleDropdown = (): void => {
   isOpen.value = !isOpen.value;
 };
 
-const submitLanguage = async (selectedLanguage: string): Promise<void> => {
+const submitProgLanguage = async (language: string): Promise<void> => {
   try {
     // Close the dropdown immediately after a selection is made
     isOpen.value = false
+
+     // Update button text to the selected language
+     selectedProgLanguage.value = language;
+
     // Construct the request body
-    const body = JSON.stringify({ language: selectedLanguage });
+    const body = JSON.stringify({ language  });
 
     // Make a POST request to the /setLanguage endpoint with the selected language as the body
-    const response = await fetch(`${serverHost}/setLanguage`, {
+    const response = await fetch(`${serverHost}/setProgLanguage`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // Set the content type to JSON
@@ -58,9 +63,9 @@ const submitLanguage = async (selectedLanguage: string): Promise<void> => {
 
     // Optionally, handle the response further
     const data = await response.json(); // Parse the response as JSON
-    console.log('Language submission was successful:', data);
+    console.log('Programming language submission was successful:', data);
   } catch (error) {
-    console.error('Error submitting language:', error);
+    console.error('Error submitting programming language:', error);
   }
 };
 </script>
@@ -79,7 +84,7 @@ const submitLanguage = async (selectedLanguage: string): Promise<void> => {
             id="dropdown-button"
             class="button"
           >
-            Select
+            {{ selectedProgLanguage }}
           </button>
           <!-- Opens Dropdown -->
           <div
@@ -95,7 +100,7 @@ const submitLanguage = async (selectedLanguage: string): Promise<void> => {
                 href="#"
                 class="dropdown-item"
                 role="menuitem"
-                @click="() => { submitLanguage('Python');}"
+                @click="() => { submitProgLanguage('Python');}"
               >
                 Python
               </a>
@@ -103,7 +108,7 @@ const submitLanguage = async (selectedLanguage: string): Promise<void> => {
                 href="#"
                 class="dropdown-item"
                 role="menuitem"
-                @click="() => { submitLanguage('C');}"
+                @click="() => { submitProgLanguage('C');}"
               >
                 C
               </a>

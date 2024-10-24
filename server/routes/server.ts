@@ -9,10 +9,21 @@ const server = express();
 //allow cors for testing purposes. 
 server.use(cors());
 server.use(express.urlencoded({ extended: true }));
+server.use(express.json()); // Parse JSON bodies
 
 server.listen(port, () => {
   console.log(`listening on port ${port}`)
 })
+
+// POST route to handle programming language selection
+server.post('/setProgLanguage', (req, res) => {
+  const { language } = req.body; // Extract language from the request body
+
+  console.log('Selected programming language:', language);
+
+  // Respond back with a message
+  res.status(200).json({ message: `Programming language set to ${language}` });
+});
 
 server.get('/compile', (req, res) => {
   const codeArea = req.query.codeArea
