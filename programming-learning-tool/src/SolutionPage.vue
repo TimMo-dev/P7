@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';  // Import ref to create a reactive variable
-import Navbar from './components/Navbar.vue';
-import GroupCollapsible from './components/GroupCollapsible.vue';
+import * as Navbar from './components/Navbar.vue';
+import * as GroupCollapsible from './components/GroupCollapsible.vue';
+import { discriminatedUnion } from 'zod';
 
 const serverHost:string = "http://localhost:5001";
 
@@ -29,6 +30,7 @@ const submitCode = async (): Promise<void> => {
 </script>
 
 <template>
+  <div>
   <Navbar />
   <div class="min-h-screen flex flex-col">
     <!-- Top containers (left and right) with more vertical height -->
@@ -97,4 +99,5 @@ const submitCode = async (): Promise<void> => {
       </div>
     </div>
   </div>
+</div>
 </template>
