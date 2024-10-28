@@ -73,8 +73,19 @@
 
 /* Dropdown menu */
 .dropdown-button {
-    @apply absolute rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 left-0
+    @apply absolute rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 left-0;
+    padding-right: 10px;
+    margin-top: 5px;
 }
 .dropdown-item {
     @apply block px-4 py-2 hover:bg-gray-100
 }
+.button::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-top-color: white; /* Set arrow color here */
+  }
