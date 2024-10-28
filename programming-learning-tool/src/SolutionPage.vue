@@ -6,6 +6,10 @@ import * as monaco from "monaco-editor";
 
 const serverHost:string = "http://localhost:5001";
 
+// Declare reactive variables for the code content and language
+const codeContent = ref<string>('print("Hello, World!")');
+const language = ref<string>('python');
+
 // Declare a reactive variable to store the textarea content
 const codeAreaContent = ref<string>('');
 
@@ -38,9 +42,9 @@ let editor: monaco.editor.IStandaloneCodeEditor | null = null;
 onMounted(() => {
   if (monacoContainer.value) {
     editor = monaco.editor.create(monacoContainer.value, {
-      value: `print("Hello, World!")`,
-      language: "python", // Specify the language (e.g., python, javascript, etc.)
-      theme: "vs-dark", // Editor theme (vs, vs-dark, hc-black)
+      value: codeContent.value,
+      language: language.value, // Specify the language (e.g., python, javascript, etc.)
+      theme: "vs", // Editor theme (vs, vs-dark, hc-black)
       automaticLayout: true,
     });
   }
@@ -60,7 +64,6 @@ onBeforeUnmount(() => {
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
       <div class="container-buttons">
-
       </div>
       <div class="container-buttons">
         <button type="button" class="button" @click="submitCode">
@@ -74,10 +77,10 @@ onBeforeUnmount(() => {
     <div class="top-containers-wrapper">
       <!-- Left container -->
       <div class="top-container">
-        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
+        <a class="absolute-text">
           Task Description:
         </a>
-        <div class="bg-white h-full overflow-y-auto">
+        <div class="white-scrollable">
           <div class="mx-4 my-8">
             test
           </div>
@@ -85,20 +88,18 @@ onBeforeUnmount(() => {
       </div>
       <!-- Right container -->
       <div class="top-container relative">
-        <a class="absolute font-bold leading-relaxed z-10 text-sm bg-gray-200 px-2 rounded-sm">
+        <a class="absolute-text">
           Editor:
         </a>
-        <div class="flex bg-white h-full relative">
-          <div class="flex flex-col w-full">
-            <div class="absolute overflow-y-auto h-full w-full flex-grow">
+        <div class="editor-flex">
+          <div class="flex-col-full">
+            <div class="absolute-full-grow">
               <div class="editor-container">
-                <div ref="monacoContainer" class="monaco-editor mx-4 my-8 resize-none h-full w-5/6"></div>
+                <div ref="monacoContainer" class="monaco-editor h-screen my-6"></div>
               </div>
-              <!-- <textarea name="codeArea" v-model="codeAreaContent" type="text" placeholder="Your code here.."
-                class="mx-4 my-8 resize-none h-full w-5/6"></textarea> -->
             </div>
             <div class="flex-grow"></div>
-            <div label="tests" class="mr-4">
+            <div label="tests" class="test-label">
               <GroupCollapsible :items="[
                 { title: 'Test 1', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
                 { title: 'Test 2', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
@@ -115,7 +116,7 @@ onBeforeUnmount(() => {
     <!-- Bottom container -->
     <div class="bottom-containers-wrapper">
       <div class="bottom-container">
-        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
+        <a class="absolute-text">
           Feedback:
         </a>
         <div class="bg-white h-20 overflow-y-auto">
