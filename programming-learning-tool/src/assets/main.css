@@ -72,20 +72,21 @@
 
 
 /* Dropdown menu */
-.dropdown-button {
-    @apply absolute rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 left-0;
-    padding-right: 10px;
-    margin-top: 5px;
+.dropdown-menu-button {
+    @apply inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50
 }
-.dropdown-item {
-    @apply block px-4 py-2 hover:bg-gray-100
+.dropdown-menu-items {
+    @apply absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
 }
-.button::after {
-    content: '';
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 5px solid transparent;
-    border-top-color: white; /* Set arrow color here */
-  }
+.dropdown-menu-item {
+    @apply block px-4 py-2 text-sm
+}
+.dropdown-arrow {
+    @apply -mr-1 h-5 w-5 text-gray-400
+}
+.hover-dropdown-item {
+    @apply bg-gray-100 text-gray-900
+}
+.non-hover-dropdown-item {
+    @apply text-gray-700
+}
