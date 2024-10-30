@@ -16,18 +16,19 @@ server.listen(port, () => {
 })
 
 // POST route to handle programming language selection
-server.post('/setProgLanguage', (req, res) => {
-  const { language } = req.body; // Extract language from the request body
+// server.post('/setProgLanguage', (req, res) => {
+//   const { language } = req.body; // Extract language from the request body
 
+//   console.log('Selected programming language:', language);
+
+//   // Respond back with a message
+//   res.status(200).json({ message: `Programming language set to ${language}` });
+// });
+
+server.post('/compile', (req, res) => {
+  const { language, codeArea } = req.body;
   console.log('Selected programming language:', language);
-
-  // Respond back with a message
-  res.status(200).json({ message: `Programming language set to ${language}` });
-});
-
-server.get('/compile', (req, res) => {
-  const codeArea = req.query.codeArea
-  console.log(codeArea)
+  console.log('Code:', codeArea);
 
   const options = {
     hostname: address,
@@ -40,6 +41,7 @@ server.get('/compile', (req, res) => {
   };
 
   const data = JSON.stringify({
+    language: language,
     code: codeArea
   });
 

@@ -7,14 +7,25 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 
 const serverHost:string = "http://localhost:5001";
 
-// Declare a reactive variable to store the textarea content
+// Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
+const selectedProgLanguage = ref<string>('Select'); // Default button text
 
 const submitCode = async (): Promise<void> => {
   try {
-    // Make a POST request to the /compile endpoint with codeAreaContent as a query parameter
-    const response = await fetch(`${serverHost}/compile?codeArea=${encodeURIComponent(codeAreaContent.value)}`, {
-      method: 'GET',
+    // Construct the request body
+    const body = JSON.stringify({ 
+      language: selectedProgLanguage.value, 
+      codeArea: codeAreaContent.value 
+    });
+
+    // Make a POST request to the /compile endpoint with codeAreaContent and language in the body
+    const response = await fetch(`${serverHost}/compile`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Set the content type to JSON
+      },
+      body: body,
     });
 
     // Check if the request was successful
@@ -31,39 +42,13 @@ const submitCode = async (): Promise<void> => {
 
 // Reactive state for toggling the dropdown
 const isOpen = ref<boolean>(false);
-const selectedProgLanguage = ref<string>('Select'); // Default button text
 
-const submitProgLanguage = async (language: string): Promise<void> => {
-  try {
+const submitProgLanguage = (language: string): void => {
     // Close the dropdown immediately after a selection is made
-    isOpen.value = false
+    isOpen.value = false;
 
      // Update button text to the selected language
      selectedProgLanguage.value = language;
-
-    // Construct the request body
-    const body = JSON.stringify({ language  });
-
-    // Make a POST request to the /setLanguage endpoint with the selected language as the body
-    const response = await fetch(`${serverHost}/setProgLanguage`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Set the content type to JSON
-      },
-      body: body,
-    });
-
-    // Check if the request was successful
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
-    }
-
-    // Optionally, handle the response further
-    const data = await response.json(); // Parse the response as JSON
-    console.log('Programming language submission was successful:', data);
-  } catch (error) {
-    console.error('Error submitting programming language:', error);
-  }
 };
 </script>
 
@@ -87,10 +72,10 @@ const submitProgLanguage = async (language: string): Promise<void> => {
             <MenuItems class="dropdown-menu-items">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#" @click="() => { submitProgLanguage('Python'); }" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
+                  <a href="#" @click.prevent="submitProgLanguage('Python')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" @click="() => { submitProgLanguage('C'); }" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
+                  <a href="#" @click.prevent="submitProgLanguage('C')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
                 </MenuItem>
               </div>
             </MenuItems>
