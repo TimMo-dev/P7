@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';  // Import ref to create a reactive variable
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
+import * as monaco from "monaco-editor";
 
 const serverHost:string = "http://localhost:5001";
+
+// Declare reactive variables for the code content and language
+const codeContent = ref<string>('print("Hello, World!")');
+const language = ref<string>('python');
 
 // Declare a reactive variable to store the textarea content
 const codeAreaContent = ref<string>('');
@@ -26,6 +31,31 @@ const submitCode = async (): Promise<void> => {
     console.error('Error submitting code:', error);
   }
 };
+
+// Reference for the editor container
+const monacoContainer = ref<HTMLDivElement | null>(null);
+
+// Editor instance
+let editor: monaco.editor.IStandaloneCodeEditor | null = null;
+
+// Initialize the Monaco Editor when the component is mounted
+onMounted(() => {
+  if (monacoContainer.value) {
+    editor = monaco.editor.create(monacoContainer.value, {
+      value: codeContent.value,
+      language: language.value, // Specify the language (e.g., python, javascript, etc.)
+      theme: "vs", // Editor theme (vs, vs-dark, hc-black)
+      automaticLayout: true,
+    });
+  }
+});
+
+// Dispose of the editor when the component is destroyed
+onBeforeUnmount(() => {
+  if (editor) {
+    editor.dispose();
+  }
+});
 </script>
 
 <template>
@@ -34,7 +64,6 @@ const submitCode = async (): Promise<void> => {
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
       <div class="container-buttons">
-
       </div>
       <div class="container-buttons">
         <button type="button" class="button" @click="submitCode">
@@ -48,10 +77,10 @@ const submitCode = async (): Promise<void> => {
     <div class="top-containers-wrapper">
       <!-- Left container -->
       <div class="top-container">
-        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
+        <a class="absolute-text">
           Task Description:
         </a>
-        <div class="bg-white h-full overflow-y-auto">
+        <div class="white-scrollable">
           <div class="mx-4 my-8">
             test
           </div>
@@ -59,17 +88,18 @@ const submitCode = async (): Promise<void> => {
       </div>
       <!-- Right container -->
       <div class="top-container relative">
-        <a class="absolute font-bold leading-relaxed z-10 text-sm bg-gray-200 px-2 rounded-sm">
+        <a class="absolute-text">
           Editor:
         </a>
-        <div class="flex bg-white h-full relative">
-          <div class="flex flex-col w-full">
-            <div class="absolute overflow-y-auto h-full w-full flex-grow">
-              <textarea name="codeArea" v-model="codeAreaContent" type="text" placeholder="Your code here.."
-                class="mx-4 my-8 resize-none h-full w-5/6"></textarea>
+        <div class="editor-flex">
+          <div class="flex-col-full">
+            <div class="absolute-full-grow">
+              <div class="editor-container">
+                <div ref="monacoContainer" class="monaco-editor h-screen my-6"></div>
+              </div>
             </div>
             <div class="flex-grow"></div>
-            <div label="tests" class="mr-4">
+            <div label="tests" class="test-label">
               <GroupCollapsible :items="[
                 { title: 'Test 1', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
                 { title: 'Test 2', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
@@ -86,7 +116,7 @@ const submitCode = async (): Promise<void> => {
     <!-- Bottom container -->
     <div class="bottom-containers-wrapper">
       <div class="bottom-container">
-        <a class="absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm">
+        <a class="absolute-text">
           Feedback:
         </a>
         <div class="bg-white h-20 overflow-y-auto">
