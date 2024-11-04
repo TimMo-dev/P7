@@ -8,15 +8,17 @@ import * as monaco from "monaco-editor";
 
 const serverHost:string = "http://localhost:5001";
 
-// Declare reactive variables for the code content and language
-const codeContent = ref<string>('print("Hello, World!")');
-
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
 
 const submitCode = async (): Promise<void> => {
   try {
+    // Get the code content from the editor
+    if (editor) {
+      codeAreaContent.value = editor.getValue();
+    }
+
     // Construct the request body
     const body = JSON.stringify({ 
       language: selectedProgLanguage.value, 
