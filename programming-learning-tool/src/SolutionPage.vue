@@ -56,6 +56,10 @@ onBeforeUnmount(() => {
     editor.dispose();
   }
 });
+
+function navigate(path:string) {
+  window.location.hash = path;
+}
 </script>
 
 <template>
@@ -64,14 +68,17 @@ onBeforeUnmount(() => {
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
       <div class="container-buttons">
+        <button type="button" class="button m-2" @click="navigate('/tasks')">
+          <i class="fa fa-arrow-left text-xl" aria-hidden="true"></i>
+        </button>
       </div>
       <div class="container-buttons">
         <button type="button" class="button" @click="submitCode">
           Submit
         </button>
-        <div class="button">
+        <button class="button">
           Run
-        </div>
+        </button>
       </div>
     </div>
     <div class="top-containers-wrapper">

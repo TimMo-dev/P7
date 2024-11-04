@@ -90,3 +90,39 @@
     @apply mr-4;
 }
 
+
+/*LangButton*/
+
+.lang-item-button {
+    @apply bg-zinc-200 border-spacing-4 p-3 mb-4 border-4 bg-gradient-to-r from-gray-300 border-neutral-400 shadow-md rounded-md flex items-center justify-between text-gray-800;
+}
+
+.lang-item-button:hover {
+    @apply bg-zinc-400 cursor-pointer text-white;
+}
+
+.lang-item-button.selected {
+    @apply bg-zinc-500 border-neutral-500 text-white;
+}
+
+.lang-item-title {
+    @apply w-full text-center font-mono text-ellipsis text-xl font-semibold;
+}
+
+/*TaskButton*/
+
+.task-item-button {
+    @apply bg-zinc-200 border-spacing-4 p-3 mb-4 border-4 bg-gradient-to-r from-gray-300 border-neutral-400 shadow-md rounded-md flex items-center justify-between text-gray-800;
+}
+
+.task-item-button:hover {
+    @apply bg-zinc-400 cursor-pointer text-gray-600
+}
+
+.task-item-title {
+    @apply w-full text-ellipsis text-base font-bold;
+}
+
+.task-item-content {
+    @apply w-full text-ellipsis text-sm font-semibold text-gray-800;
+}
