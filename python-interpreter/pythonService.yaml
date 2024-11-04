@@ -4,7 +4,7 @@ metadata:
   name: python-interpreter-service
 spec:
   selector:
-    app: python-interpreter
+    app: python-interpreter-pods
   ports:
     - protocol: TCP
       port: 80

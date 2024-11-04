@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-interpreter
+  name: python-interpreter-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: python-interpreter
+      app: python-interpreter-pods
   template:
     metadata:
       labels:
-        app: python-interpreter
+        app: python-interpreter-pods
     spec:
       containers:
         - name: python-interpreter-container
           image: python-interpreter2:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
           resources:
