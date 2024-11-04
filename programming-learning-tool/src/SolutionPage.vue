@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue';
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
@@ -8,14 +8,10 @@ import * as monaco from "monaco-editor";
 
 const serverHost:string = "http://localhost:5001";
 
-// Declare reactive variables to store the textarea content and selected programming language
-
-
 // Declare reactive variables for the code content and language
 const codeContent = ref<string>('print("Hello, World!")');
-const language = ref<string>('python');
 
-// Declare a reactive variable to store the textarea content
+// Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
 
@@ -68,11 +64,16 @@ let editor: monaco.editor.IStandaloneCodeEditor | null = null;
 onMounted(() => {
   if (monacoContainer.value) {
     editor = monaco.editor.create(monacoContainer.value, {
-      value: codeContent.value,
-      language: language.value, // Specify the language (e.g., python, javascript, etc.)
+      value: codeAreaContent.value,
+      language: '', // Specify the language (e.g., python, javascript, etc.)
       theme: "vs", // Editor theme (vs, vs-dark, hc-black)
       automaticLayout: true,
     });
+    watch(selectedProgLanguage, (newLanguage) => {
+      if (editor) {
+        monaco.editor.setModelLanguage(editor.getModel()!, newLanguage);
+      }
+    })
   }
 });
 
@@ -95,7 +96,7 @@ onBeforeUnmount(() => {
         <Menu as="div" class="relative inline-block text-left">
           <div>
             <MenuButton class="dropdown-menu-button">
-              {{ selectedProgLanguage }}
+              {{ selectedProgLanguage}}
               <ChevronDownIcon class="dropdown-arrow" aria-hidden="true" />
             </MenuButton>
           </div>
@@ -104,10 +105,10 @@ onBeforeUnmount(() => {
             <MenuItems class="dropdown-menu-items">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#" @click.prevent="submitProgLanguage('Python')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
+                  <a href="#" @click.prevent="submitProgLanguage('python')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" @click.prevent="submitProgLanguage('C')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
+                  <a href="#" @click.prevent="submitProgLanguage('c')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
                 </MenuItem>
               </div>
             </MenuItems>
