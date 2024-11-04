@@ -90,3 +90,27 @@
 .non-hover-dropdown-item {
     @apply text-gray-700
 }
+.absolute-text {
+    @apply absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm;
+}
+
+.white-scrollable {
+    @apply bg-white h-full overflow-y-auto;
+}
+
+.editor-flex {
+    @apply flex bg-white h-full relative;
+}
+
+.flex-col-full {
+    @apply flex flex-col w-full;
+}
+
+.absolute-full-grow {
+    @apply absolute overflow-hidden h-full w-full flex-grow;
+}
+
+.test-label {
+    @apply mr-4;
+}
+
