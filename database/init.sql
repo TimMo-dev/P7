@@ -23,12 +23,12 @@ INSERT INTO Programming_task (title, description) VALUES
     ('Fibonacci Sequence', 'Return the nth number in the Fibonacci series.');
 
 INSERT INTO Tests (test_case_id, taskid) VALUES
-    (1, 1),  -- Test case for "Addition"
-    (2, 1),  -- Another test case for "Addition"
-    (3, 2),  -- Test case for "String Reversal"
-    (4, 3),  -- Test case for "Prime Checker"
-    (5, 3),  -- Another test case for "Prime Checker"
-    (6, 4);  -- Test case for "Fibonacci Sequence"
+    (1, 1),  
+    (2, 1),
+    (3, 2),  
+    (4, 3),  
+    (5, 3),  
+    (6, 4);
 
 INSERT INTO Test_Output (output_id, test_case_id, output_description, expected_output) VALUES
     (1, 1, 'Sum of 3 and 5', '8'),
