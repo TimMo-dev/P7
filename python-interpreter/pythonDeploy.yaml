@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: python-interpreter-container
-          image: python-interpreter2:latest
+          image: python-interpreter:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
