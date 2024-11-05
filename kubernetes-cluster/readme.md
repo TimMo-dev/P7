@@ -3,7 +3,7 @@
 > It is the only port that the container is currently listening on (will be changed when moving to Kubernetes).
 > Remeber to cd into the python-interpreter directory when building the image and applying the yaml files.
 
-Ingress will be setup using port 8080, and is therefore the specified port on the server.ts. If usinng just a Docker container for testing purposes, the port can be mapped using:
+Ingress will be setup using port 8080, and is therefore the specified port on the server.ts. If using just a Docker container for testing purposes, the port can be mapped using:
 ```sh
 docker run -p 8080:5000 python-interpreter
 ```
@@ -13,7 +13,7 @@ This will ensure port 8080 is used on the localhost and is mapped to port 5000 i
 ## For creating a cluster, use the following commands (assuming k3d is already installed):
 
 Only run once.
-Creating the cluster and bulding the image
+Creating the cluster and building the image
 ```sh
 k3d cluster create compileCluster --api-port 6550 --port "8080:80@loadbalancer" 
 docker build -t python-interpreter .
