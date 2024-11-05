@@ -30,20 +30,16 @@
 
 /*Solution Page*/
 
-.top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4
-}
-
 .top-container {
     @apply w-1/2 bg-gray-200 p-2 flex-1
 }
 
 .top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2 pt-1
+    @apply flex flex-grow h-4/6 justify-between space-x-4 p-2 pt-1
 }
 
 .bottom-container {
-    @apply flex-grow h-24 bg-gray-200 m-2 p-2
+    @apply flex-grow h-40 bg-gray-200 m-2 p-2
 }
 
 .bottom-containers-wrapper {
@@ -59,7 +55,7 @@
 }
 
 .button {
-    @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-400;
+    @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-700;
 }
 
 .border-test {
@@ -150,3 +146,13 @@
 .task-item-content {
     @apply w-full text-ellipsis text-sm font-semibold text-gray-800;
 }
+
+/*used to lock the navbar without moving all components down which creates an unnecessary scroll whell*/
+
+.fixed-component {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+  }

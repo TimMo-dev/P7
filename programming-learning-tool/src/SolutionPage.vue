@@ -6,7 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
 
-const serverHost:string = "http://localhost:5001";
+const serverHost: string = "http://localhost:5001";
 
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
@@ -20,9 +20,9 @@ const submitCode = async (): Promise<void> => {
     }
 
     // Construct the request body
-    const body = JSON.stringify({ 
-      language: selectedProgLanguage.value, 
-      codeArea: codeAreaContent.value 
+    const body = JSON.stringify({
+      language: selectedProgLanguage.value,
+      codeArea: codeAreaContent.value
     });
 
     // Make a POST request to the /compile endpoint with codeAreaContent and language in the body
@@ -50,11 +50,11 @@ const submitCode = async (): Promise<void> => {
 const isOpen = ref<boolean>(false);
 
 const submitProgLanguage = (language: string): void => {
-    // Close the dropdown immediately after a selection is made
-    isOpen.value = false;
+  // Close the dropdown immediately after a selection is made
+  isOpen.value = false;
 
-     // Update button text to the selected language
-     selectedProgLanguage.value = language;
+  // Update button text to the selected language
+  selectedProgLanguage.value = language;
 };
 // Reference for the editor container
 const monacoContainer = ref<HTMLDivElement | null>(null);
@@ -86,38 +86,42 @@ onBeforeUnmount(() => {
   }
 });
 
-function navigate(path:string) {
+function navigate(path: string) {
   window.location.hash = path;
 }
 </script>
 
 <template>
-  <Navbar />
-  <div class="min-h-screen flex flex-col">
+  <Navbar/>
+  <div class="flex flex-col" style="min-height: calc(100vh - 3.5rem)">
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
       <!-- Left Top Container -->
-      <div class="container-buttons">
+      <div class="container-buttons items-center justify-between">
         <button type="button" class="button m-2" @click="navigate('/tasks')">
           <i class="fa fa-arrow-left text-xl" aria-hidden="true"></i>
         </button>
-        Programming Language:
-        <Menu as="div" class="relative inline-block text-left">
+        <div class="ml-auto mr-2"> Programming Language: </div>
+        <Menu as="div" class="relative inline-block">
           <div>
             <MenuButton class="dropdown-menu-button">
-              {{ selectedProgLanguage}}
+              {{ selectedProgLanguage }}
               <ChevronDownIcon class="dropdown-arrow" aria-hidden="true" />
             </MenuButton>
           </div>
-
-          <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+          <transition enter-active-class="transition ease-out duration-100"
+            enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+            leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+            leave-to-class="transform opacity-0 scale-95">
             <MenuItems class="dropdown-menu-items">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#" @click.prevent="submitProgLanguage('python')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
+                <a href="#" @click.prevent="submitProgLanguage('python')"
+                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" @click.prevent="submitProgLanguage('c')" :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
+                <a href="#" @click.prevent="submitProgLanguage('c')"
+                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -126,10 +130,11 @@ function navigate(path:string) {
       </div>
       <!-- Right Top Container -->
       <div class="container-buttons">
-        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="submitCode">
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          @click="submitCode">
           Submit
         </button>
-        <div class="button">
+        <button type="button" class="button mx-2 text-white font-bold">
           Run
         </button>
       </div>
@@ -148,14 +153,14 @@ function navigate(path:string) {
       </div>
       <!-- Right container -->
       <div class="top-container relative">
-        <a class="absolute-text">
+        <a class="absolute-text z-10">
           Editor:
         </a>
         <div class="editor-flex">
           <div class="flex-col-full">
             <div class="absolute-full-grow">
               <div class="editor-container">
-                <div ref="monacoContainer" class="monaco-editor h-screen my-6"></div>
+                <div ref="monacoContainer" class="monaco-editor h-screen my-8"></div>
               </div>
             </div>
             <div class="flex-grow"></div>
@@ -179,7 +184,7 @@ function navigate(path:string) {
         <a class="absolute-text">
           Feedback:
         </a>
-        <div class="bg-white h-20 overflow-y-auto">
+        <div class="bg-white h-full overflow-y-auto">
           <div class="mx-4 my-8">
             test
           </div>
