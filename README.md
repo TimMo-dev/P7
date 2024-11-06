@@ -72,7 +72,6 @@ kubectl apply -f pythonService.yaml
 kubectl apply -f Ingress.yaml
 ```
 
-
 ## For starting and stopping the cluster:
 ```sh
 k3d cluster start compileCluster
@@ -80,3 +79,17 @@ k3d cluster start compileCluster
 ```sh
 k3d cluster stop compileCluster
 ```
+
+# Server setup
+Run the following commands in the 'server' directory: 
+
+```sh
+npm install express
+npm install tsx
+npm install cors
+npm install @types/express --save-dev
+```
+
+To start the server: 
+
+- npx tsx routes/server.ts
