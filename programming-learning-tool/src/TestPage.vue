@@ -1,45 +1,28 @@
-<template>
-  <div class="editor-container">
-    <div ref="monacoContainer" class="monaco-editor"></div>
-  </div>
-</template>
+<script setup lang="ts">
+import { ref } from 'vue';
 
-<script>
-import * as monaco from "monaco-editor";
-
-export default {
-  name: "MonacoEditor",
-  data() {
-    return {
-      editor: null,
-    };
-  },
-  mounted() {
-    // Initialize the Monaco Editor when the component is mounted
-    this.editor = monaco.editor.create(this.$refs.monacoContainer, {
-      value: `print("Hello, World!")`,
-      language: "python", // Specify the language (e.g., python, javascript, etc.)
-      theme: "vs-dark", // Editor theme (vs, vs-dark, hc-black)
-      automaticLayout: true,
-    });
-  },
-  beforeDestroy() {
-    // Dispose the editor when the component is destroyed
-    if (this.editor) {
-      this.editor.dispose();
-    }
-  },
-};
+import Navbar from './components/Navbar.vue';
+import LangButton from './components/LangButton.vue';
+import TaskButton from './components/TaskButton.vue';
+import ResizablePanels from './components/ResizablePanels.vue';
 </script>
 
-<style>
-.editor-container {
-  height: 100vh;
-  width: 100%;
-}
-
-.monaco-editor {
-  height: 100%;
-  width: 100%;
-}
-</style>
+<template>
+  <div>
+    <h1>Resizable Panels Example</h1>
+    <ResizablePanels>
+      <template v-slot:top>
+        <div class="border-test" style="padding: 10px; height: 100%">
+          <h2>Top Panel</h2>
+          <p>This panel can be resized. You can place any content here.</p>
+        </div>
+      </template>
+      <template v-slot:bottom>
+        <div class="border-test" style="padding: 10px; height: 100%">
+          <h2>Bottom Panel</h2>
+          <p>This panel can also be resized. Add your content here.</p>
+        </div>
+      </template>
+    </ResizablePanels>
+  </div>
+</template>

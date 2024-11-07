@@ -2,6 +2,7 @@
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
+import ResizablePanels from './components/ResizablePanels.vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
@@ -92,7 +93,7 @@ function navigate(path: string) {
 </script>
 
 <template>
-  <Navbar/>
+  <Navbar />
   <div class="flex flex-col" style="min-height: calc(100vh - 3.5rem)">
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
@@ -128,6 +129,7 @@ function navigate(path: string) {
           </transition>
         </Menu>
       </div>
+
       <!-- Right Top Container -->
       <div class="container-buttons">
         <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -139,57 +141,63 @@ function navigate(path: string) {
         </button>
       </div>
     </div>
-    <div class="top-containers-wrapper">
-      <!-- Left container -->
-      <div class="top-container">
-        <a class="absolute-text">
-          Task Description:
-        </a>
-        <div class="white-scrollable">
-          <div class="mx-4 my-8">
-            test
-          </div>
-        </div>
-      </div>
-      <!-- Right container -->
-      <div class="top-container relative">
-        <a class="absolute-text z-10">
-          Editor:
-        </a>
-        <div class="editor-flex">
-          <div class="flex-col-full">
-            <div class="absolute-full-grow">
-              <div class="editor-container">
-                <div ref="monacoContainer" class="monaco-editor h-screen my-8"></div>
+    <ResizablePanels :start-height="0.2" class="border-test">
+      <template v-slot:top>
+        <div class="top-containers-wrapper h-full">
+          <!-- Left container -->
+          <div class="top-container">
+            <a class="absolute-text">
+              Task Description:
+            </a>
+            <div class="white-scrollable">
+              <div class="mx-4 my-8">
+                test
               </div>
             </div>
-            <div class="flex-grow"></div>
-            <div label="tests" class="test-label">
-              <GroupCollapsible :items="[
-                { title: 'Test 1', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                { title: 'Test 2', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                { title: 'Test 3', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                { title: 'Test 4', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                { title: 'Test 5', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-              ]" />
+          </div>
+          <!-- Right container -->
+          <div class="top-container relative">
+            <a class="absolute-text z-10">
+              Editor:
+            </a>
+            <div class="editor-flex">
+              <div class="flex-col-full">
+                <div class="absolute-full-grow">
+                  <div class="editor-container">
+                    <div ref="monacoContainer" class="monaco-editor h-screen my-8"></div>
+                  </div>
+                </div>
+                <div class="flex-grow"></div>
+                <div label="tests" class="test-label">
+                  <GroupCollapsible :items="[
+                    { title: 'Test 1', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                    { title: 'Test 2', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                    { title: 'Test 3', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                    { title: 'Test 4', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                    { title: 'Test 5', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                  ]" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
 
-    <!-- Bottom container -->
-    <div class="bottom-containers-wrapper">
-      <div class="bottom-container">
-        <a class="absolute-text">
-          Feedback:
-        </a>
-        <div class="bg-white h-full overflow-y-auto">
-          <div class="mx-4 my-8">
-            test
+      <!-- Bottom container -->
+      <template v-slot:bottom>
+        <div class="bottom-containers-wrapper h-full">
+          <div class="bottom-container">
+            <a class="absolute-text">
+              Feedback:
+            </a>
+            <div class="bg-white h-full overflow-y-auto">
+              <div class="mx-4 my-8">
+                test
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </ResizablePanels>
   </div>
 </template>
