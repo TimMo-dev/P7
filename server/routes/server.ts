@@ -9,18 +9,20 @@ const server = express();
 //allow cors for testing purposes. 
 server.use(cors());
 server.use(express.urlencoded({ extended: true }));
+server.use(express.json()); // Parse JSON bodies
 
 server.listen(port, () => {
   console.log(`listening on port ${port}`)
 })
 
-server.get('/compile', (req, res) => {
-  const codeArea = req.query.codeArea
-  console.log(codeArea)
+server.post('/compile', (req, res) => {
+  const { language, codeArea } = req.body;
+  console.log('Selected programming language:', language);
+  console.log('Code:', codeArea);
 
   const options = {
     hostname: address,
-    port: 5000,
+    port: 8080,
     path: '/compile',
     method: 'POST',
     headers: {
@@ -29,6 +31,7 @@ server.get('/compile', (req, res) => {
   };
 
   const data = JSON.stringify({
+    language: language,
     code: codeArea
   });
 

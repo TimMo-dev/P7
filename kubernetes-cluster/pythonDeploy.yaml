@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-interpreter-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-interpreter-pods
+  template:
+    metadata:
+      labels:
+        app: python-interpreter-pods
+    spec:
+      containers:
+        - name: python-interpreter-container
+          image: python-interpreter:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+
