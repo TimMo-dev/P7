@@ -208,7 +208,7 @@ function navigate(path: string) {
           <!-- Left Bottom Container -->
           <VerticalResizablePanels>
             <template v-slot:left>
-              <div class="bottom-container">
+              <div class="bottom-container relative">
                 <a class="absolute-text">
                   Feedback:
                 </a>
@@ -221,7 +221,7 @@ function navigate(path: string) {
             </template>
             <!-- Right Bottom Container -->
             <template v-slot:right>
-              <div class="bottom-container">
+              <div class="bottom-container relative">
                 <a class="absolute-text">
                   Output:
                 </a>
