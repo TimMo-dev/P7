@@ -1,28 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-import Navbar from './components/Navbar.vue';
-import LangButton from './components/LangButton.vue';
-import TaskButton from './components/TaskButton.vue';
-import ResizablePanels from './components/ResizablePanels.vue';
+import VerticalResizablePanels from './components/VerticalResizablePanels.vue';
 </script>
 
 <template>
   <div>
     <h1>Resizable Panels Example</h1>
-    <ResizablePanels>
-      <template v-slot:top>
+    <VerticalResizablePanels>
+      <template v-slot:left>
         <div class="border-test" style="padding: 10px; height: 100%">
-          <h2>Top Panel</h2>
+          <h2>Left Panel</h2>
           <p>This panel can be resized. You can place any content here.</p>
         </div>
       </template>
-      <template v-slot:bottom>
+      <template v-slot:right>
         <div class="border-test" style="padding: 10px; height: 100%">
-          <h2>Bottom Panel</h2>
+          <h2>Right Panel</h2>
           <p>This panel can also be resized. Add your content here.</p>
         </div>
       </template>
-    </ResizablePanels>
+    </VerticalResizablePanels>
   </div>
 </template>
+
+<style scoped>
+.border-test {
+  border: 1px solid #ccc;
+}
+</style>

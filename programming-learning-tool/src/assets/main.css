@@ -31,7 +31,7 @@
 /*Solution Page*/
 
 .top-container {
-    @apply w-1/2 bg-gray-200 p-2 flex-1
+    @apply bg-gray-200 p-2 flex-grow flex-col h-full
 }
 
 .top-containers-wrapper {
@@ -62,9 +62,9 @@
     @apply border-black border-dashed border-2
 }
 
-  .resizer {
+.resizer {
     @apply w-1 cursor-ew-resize bg-gray-50 h-full
-  }
+}
 
 
 /* Dropdown menu */
@@ -91,7 +91,7 @@
 }
 
 .white-scrollable {
-    @apply bg-white h-full overflow-y-auto;
+    @apply bg-white h-full overflow-y-auto
 }
 
 .editor-flex {
@@ -148,11 +148,3 @@
 }
 
 /*used to lock the navbar without moving all components down which creates an unnecessary scroll whell*/
-
-.fixed-component {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1000;
-    width: 100%;
-  }

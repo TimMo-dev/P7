@@ -2,7 +2,8 @@
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
-import ResizablePanels from './components/ResizablePanels.vue'
+import HorizontalResizablePanels from './components/HorizontalResizablePanels.vue'
+import VerticalResizablePanels from './components/VerticalResizablePanels.vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
@@ -141,45 +142,52 @@ function navigate(path: string) {
         </button>
       </div>
     </div>
-    <ResizablePanels :start-height="0.2" class="border-test">
+    <HorizontalResizablePanels :start-height="0.2">
       <template v-slot:top>
         <div class="top-containers-wrapper h-full">
           <!-- Left container -->
-          <div class="top-container">
-            <a class="absolute-text">
-              Task Description:
-            </a>
-            <div class="white-scrollable">
-              <div class="mx-4 my-8">
-                test
-              </div>
-            </div>
-          </div>
-          <!-- Right container -->
-          <div class="top-container relative">
-            <a class="absolute-text z-10">
-              Editor:
-            </a>
-            <div class="editor-flex">
-              <div class="flex-col-full">
-                <div class="absolute-full-grow">
-                  <div class="editor-container">
-                    <div ref="monacoContainer" class="monaco-editor h-screen my-8"></div>
+          <VerticalResizablePanels>
+            <template v-slot:left>
+              <div class="top-container">
+                <a class="absolute-text">
+                  Task Description:
+                </a>
+                <div class="white-scrollable">
+                  <div class="mx-4 my-8">
+                    test
                   </div>
                 </div>
-                <div class="flex-grow"></div>
-                <div label="tests" class="test-label">
-                  <GroupCollapsible :items="[
-                    { title: 'Test 1', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                    { title: 'Test 2', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                    { title: 'Test 3', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                    { title: 'Test 4', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                    { title: 'Test 5', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
-                  ]" />
+              </div>
+            </template>
+
+            <!-- Right container -->
+            <template v-slot:right>
+              <div class="top-container relative">
+                <a class="absolute-text z-10">
+                  Editor:
+                </a>
+                <div class="editor-flex">
+                  <div class="flex-col-full">
+                    <div class="absolute-full-grow">
+                      <div class="editor-container">
+                        <div ref="monacoContainer" class="monaco-editor h-screen my-8"></div>
+                      </div>
+                    </div>
+                    <div class="flex-grow overflow-x-auto"></div>
+                    <div label="tests" class="test-label z-10">
+                      <GroupCollapsible :items="[
+                        { title: 'Test 1', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                        { title: 'Test 2', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                        { title: 'Test 3', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                        { title: 'Test 4', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                        { title: 'Test 5', content: 'Input: 12<br>Expected Output: 13<br>Actual Output: 14' },
+                      ]" />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </template>
+          </VerticalResizablePanels>
         </div>
       </template>
 
@@ -198,6 +206,6 @@ function navigate(path: string) {
           </div>
         </div>
       </template>
-    </ResizablePanels>
+    </HorizontalResizablePanels>
   </div>
 </template>
