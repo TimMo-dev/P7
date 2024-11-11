@@ -39,7 +39,7 @@
 }
 
 .bottom-container {
-  @apply flex-grow bg-gray-200 m-2 p-2;
+  @apply flex-grow bg-gray-200 m-2 p-2 h-full;
 }
 
 .bottom-containers-wrapper {
