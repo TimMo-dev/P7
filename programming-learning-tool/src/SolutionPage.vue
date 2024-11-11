@@ -4,6 +4,8 @@ import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import HorizontalResizablePanels from './components/HorizontalResizablePanels.vue'
 import VerticalResizablePanels from './components/VerticalResizablePanels.vue'
+import HorizontalResizablePanels from './components/HorizontalResizablePanels.vue'
+import VerticalResizablePanels from './components/VerticalResizablePanels.vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
@@ -26,6 +28,9 @@ const submitCode = async (): Promise<void> => {
     }
 
     // Construct the request body
+    const body = JSON.stringify({
+      language: selectedProgLanguage.value,
+      codeArea: codeAreaContent.value
     const body = JSON.stringify({
       language: selectedProgLanguage.value,
       codeArea: codeAreaContent.value
@@ -58,7 +63,11 @@ const isOpen = ref<boolean>(false);
 const submitProgLanguage = (language: string): void => {
   // Close the dropdown immediately after a selection is made
   isOpen.value = false;
+  // Close the dropdown immediately after a selection is made
+  isOpen.value = false;
 
+  // Update button text to the selected language
+  selectedProgLanguage.value = language;
   // Update button text to the selected language
   selectedProgLanguage.value = language;
 };
@@ -95,10 +104,15 @@ onBeforeUnmount(() => {
 function navigate(path: string) {
   window.location.hash = path;
 }
+
+function navigate(path: string) {
+  window.location.hash = path;
+}
 </script>
 
 <template>
   <Navbar />
+  <div class="flex flex-col" style="min-height: calc(100vh - 3.5rem)">
   <div class="flex flex-col" style="min-height: calc(100vh - 3.5rem)">
     <!-- Top containers (left and right) with more vertical height -->
     <div class="solution-buttons">
@@ -109,12 +123,23 @@ function navigate(path: string) {
         </button>
         <div class="ml-auto mr-2"> Programming Language: </div>
         <Menu as="div" class="relative inline-block">
+      <div class="container-buttons items-center justify-between">
+        <button type="button" class="button m-2" @click="navigate('/tasks')">
+          <i class="fa fa-arrow-left text-xl" aria-hidden="true"></i>
+        </button>
+        <div class="ml-auto mr-2"> Programming Language: </div>
+        <Menu as="div" class="relative inline-block">
           <div>
             <MenuButton class="dropdown-menu-button">
+              {{ selectedProgLanguage }}
               {{ selectedProgLanguage }}
               <ChevronDownIcon class="dropdown-arrow" aria-hidden="true" />
             </MenuButton>
           </div>
+          <transition enter-active-class="transition ease-out duration-100"
+            enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+            leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+            leave-to-class="transform opacity-0 scale-95">
           <transition enter-active-class="transition ease-out duration-100"
             enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
             leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
@@ -124,8 +149,12 @@ function navigate(path: string) {
                 <MenuItem v-slot="{ active }">
                 <a href="#" @click.prevent="submitProgLanguage('python')"
                   :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
+                <a href="#" @click.prevent="submitProgLanguage('python')"
+                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
+                <a href="#" @click.prevent="submitProgLanguage('c')"
+                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
                 <a href="#" @click.prevent="submitProgLanguage('c')"
                   :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
                 </MenuItem>
@@ -135,12 +164,16 @@ function navigate(path: string) {
         </Menu>
       </div>
 
+
       <!-- Right Top Container -->
       <div class="container-buttons">
         <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           @click="submitCode">
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          @click="submitCode">
           Submit
         </button>
+        <button type="button" class="button mx-2 text-white font-bold">
         <button type="button" class="button mx-2 text-white font-bold">
           Run
         </button>
@@ -195,6 +228,22 @@ function navigate(path: string) {
         </div>
       </template>
 
+      <!-- Bottom container -->
+      <template v-slot:bottom>
+        <div class="bottom-containers-wrapper h-full">
+          <div class="bottom-container">
+            <a class="absolute-text">
+              Feedback:
+            </a>
+            <div class="bg-white h-full overflow-y-auto">
+              <div class="mx-4 my-8">
+                test
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </HorizontalResizablePanels>
       <!-- Bottom container -->
       <template v-slot:bottom>
         <div class="bottom-containers-wrapper h-full">
