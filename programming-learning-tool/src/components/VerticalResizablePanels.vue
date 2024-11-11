@@ -18,8 +18,8 @@ const rightWidth = ref<number>(screenWidth.value - leftWidth.value); // Initial 
 const startX = ref<number>(0); // Initial X position for resizing
 
 // Boundaries for the resizing to stay within valid space
-const minLeftWidth = 200; // Minimum width for the left panel
-const minRightWidth = 200; // Minimum width for the right panel
+const minLeftWidth = window.innerWidth/10; // Minimum width for the left panel
+const minRightWidth = window.innerWidth/10; // Minimum width for the right panel
 
 const updateScreenWidth = () => {
   screenWidth.value = window.innerWidth;
