@@ -37,7 +37,7 @@ npm run test:unit
 > [!CAUTION]
 > Use port 5000 for the docker port when running the image!
 > It is the only port that the container is currently listening on (will be changed when moving to Kubernetes).
-> Remeber to cd into the python-interpreter directory when building the image and applying the yaml files.
+> Remeber to cd into the Kubernetes directory when building the image and applying the yaml files.
 
 Ingress will be setup using port 8080, and is therefore the specified port on the server.ts. If using just a Docker container for testing purposes, the port can be mapped using:
 ```sh
