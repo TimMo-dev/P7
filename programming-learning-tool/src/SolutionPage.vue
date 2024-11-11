@@ -185,6 +185,16 @@ onBeforeUnmount(() => {
         </a>
         <div class="bg-white h-20 overflow-y-auto">
           <div class="mx-4 my-8">
+            test
+          </div>
+        </div>
+      </div>
+      <div class="bottom-container">
+        <a class="absolute-text">
+          Output:
+        </a>
+        <div class="bg-white h-20 overflow-y-auto">
+          <div class="mx-4 my-8">
             Output from terminal: {{ terminalOutput }}
           </div>
         </div>

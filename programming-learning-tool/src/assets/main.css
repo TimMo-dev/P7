@@ -5,112 +5,110 @@
 /*NavBar*/
 
 .navbar {
-    @apply relative flex flex-wrap items-center justify-between px-2 bg-gray-100 mb-2;
+  @apply relative flex flex-wrap items-center justify-between px-2 bg-gray-100 mb-2;
 }
 
 .navbar-items {
-    @apply container mx-auto flex flex-wrap items-center justify-between
+  @apply container mx-auto flex flex-wrap items-center justify-between;
 }
 
 .left-navbar-item {
-    @apply w-full relative flex justify-center lg:w-auto px-4 lg:static lg:block lg:justify-start
+  @apply w-full relative flex justify-center lg:w-auto px-4 lg:static lg:block lg:justify-start;
 }
 
 .navbar-text {
-    @apply text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black
+  @apply text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black;
 }
 
 .navbar-item {
-    @apply px-3 py-1 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75
+  @apply px-3 py-1 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75;
 }
 
 .navbar-list {
-    @apply flex flex-col lg:flex-row list-none ml-auto items-center
+  @apply flex flex-col lg:flex-row list-none ml-auto items-center;
 }
 
 /*Solution Page*/
 
 .top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4
+  @apply flex flex-grow h-3/4 justify-between space-x-4;
 }
 
 .top-container {
-    @apply w-1/2 bg-gray-200 p-2 flex-1
+  @apply w-1/2 bg-gray-200 p-2 flex-1;
 }
 
 .top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2 pt-1
+  @apply flex flex-grow h-3/4 justify-between space-x-4 p-2 pt-1;
 }
 
 .bottom-container {
-    @apply flex-grow h-24 bg-gray-200 m-2 p-2
+  @apply flex-grow h-24 bg-gray-200 m-2 p-2 flex-1 space-x-4;
 }
 
 .bottom-containers-wrapper {
-    @apply flex flex-col justify-between space-x-4 p-0
+  @apply flex flex-row justify-between p-0;
 }
 
 .solution-buttons {
-    @apply flex justify-between space-x-4 p-0
+  @apply flex justify-between space-x-4 p-0;
 }
 
 .container-buttons {
-    @apply w-1/2 flex
+  @apply w-1/2 flex;
 }
 
 .button {
-    @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-400;
+  @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-400;
 }
 
 .border-test {
-    @apply border-black border-dashed border-2
+  @apply border-black border-dashed border-2;
 }
 
-  .resizer {
-    @apply w-1 cursor-ew-resize bg-gray-50 h-full
-  }
-
+.resizer {
+  @apply w-1 cursor-ew-resize bg-gray-50 h-full;
+}
 
 /* Dropdown menu */
 .dropdown-menu-button {
-    @apply inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50
+  @apply inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50;
 }
 .dropdown-menu-items {
-    @apply absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
+  @apply absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
 }
 .dropdown-menu-item {
-    @apply block px-4 py-2 text-sm
+  @apply block px-4 py-2 text-sm;
 }
 .dropdown-arrow {
-    @apply -mr-1 h-5 w-5 text-gray-400
+  @apply -mr-1 h-5 w-5 text-gray-400;
 }
 .hover-dropdown-item {
-    @apply bg-gray-100 text-gray-900
+  @apply bg-gray-100 text-gray-900;
 }
 .non-hover-dropdown-item {
-    @apply text-gray-700
+  @apply text-gray-700;
 }
 .absolute-text {
-    @apply absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm;
+  @apply absolute font-bold leading-relaxed text-sm bg-gray-200 px-2 rounded-sm;
 }
 
 .white-scrollable {
-    @apply bg-white h-full overflow-y-auto;
+  @apply bg-white h-full overflow-y-auto;
 }
 
 .editor-flex {
-    @apply flex bg-white h-full relative;
+  @apply flex bg-white h-full relative;
 }
 
 .flex-col-full {
-    @apply flex flex-col w-full;
+  @apply flex flex-col w-full;
 }
 
 .absolute-full-grow {
-    @apply absolute overflow-hidden h-full w-full flex-grow;
+  @apply absolute overflow-hidden h-full w-full flex-grow;
 }
 
 .test-label {
-    @apply mr-4;
+  @apply mr-4;
 }
-
