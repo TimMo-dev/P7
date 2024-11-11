@@ -18,8 +18,8 @@ const bottomHeight = ref<number>(screenHeight.value / 2 - 55 - (props.startHeigh
 const startY = ref<number>(0); // Initial Y position for resizing
 
 // Boundaries for the resizing to stay within valid space
-const minTopHeight = 100; // Minimum height for the top panel
-const minBottomHeight = 100; // Minimum height for the bottom panel
+const minTopHeight = window.innerHeight/10; // Minimum height for the top panel
+const minBottomHeight = window.innerHeight/10; // Minimum height for the bottom panel
 
 const updateScreenHeight= () => {
       screenHeight.value = window.innerHeight;
