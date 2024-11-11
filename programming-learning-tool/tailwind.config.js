@@ -5,9 +5,6 @@ export default {
     extend: {
       sans: ['Poppins', 'sans-serif']
     },
-    gridTemplateColumns: {
-      '70/30': '70% 28%'
-    },
   },
   variants: {
     extend: {},
