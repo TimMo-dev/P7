@@ -11,6 +11,7 @@ const serverHost:string = "http://localhost:5001";
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
+const terminalOutput = ref<string>('');
 
 const submitCode = async (): Promise<void> => {
   try {
@@ -39,10 +40,20 @@ const submitCode = async (): Promise<void> => {
       throw new Error(`Error: ${response.statusText}`);
     }
 
-    // You can handle the response further, like displaying it to the user
+    // Parse the response JSON
+    const result = await response.json();
+
+    // Check if there is an error in the response
+    if (result.forwardedResponse.error) {
+      terminalOutput.value = result.forwardedResponse.error.trim();
+    } else {
+      terminalOutput.value = result.forwardedResponse.output.trim();
+    }
+
     console.log('Compilation request was successful');
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error submitting code:', error);
+    terminalOutput.value = 'Error submitting code: ' + error.message;
   }
 };
 
@@ -174,7 +185,7 @@ onBeforeUnmount(() => {
         </a>
         <div class="bg-white h-20 overflow-y-auto">
           <div class="mx-4 my-8">
-            test
+            Output from terminal: {{ terminalOutput }}
           </div>
         </div>
       </div>
