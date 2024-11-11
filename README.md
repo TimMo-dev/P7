@@ -17,9 +17,21 @@ npm install
 
 ### Compile and Hot-Reload for Development
 
+Run client and server
 ```sh
 npm run dev
 ```
+
+Run client
+```sh
+npm run dev:client
+```
+
+Run server
+```sh
+npm run dev:server
+```
+
 
 ### Type-Check, Compile and Minify for Production
 
@@ -56,7 +68,7 @@ docker build -t python-interpreter .
 ```
 
 Might be needed if k3d does not correctly configure the api port
-```
+```sh
 kubectl config set-cluster k3d-compileCluster --server=https://localhost:6550
 ```
 
