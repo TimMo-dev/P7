@@ -30,24 +30,20 @@
 
 /*Solution Page*/
 
-.top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4
-}
-
 .top-container {
-    @apply w-1/2 bg-gray-200 p-2 flex-1
+    @apply bg-gray-200 p-2 flex-grow flex-col h-full
 }
 
 .top-containers-wrapper {
-    @apply flex flex-grow h-3/4 justify-between space-x-4 p-2 pt-1
+    @apply flex flex-grow justify-between space-x-4 p-2 pt-1
 }
 
 .bottom-container {
-    @apply flex-grow h-24 bg-gray-200 m-2 p-2
+    @apply flex-grow bg-gray-200 m-2 p-2
 }
 
 .bottom-containers-wrapper {
-    @apply flex flex-col justify-between space-x-4 p-0
+    @apply flex flex-grow justify-between space-x-4 p-0
 }
 
 .solution-buttons {
@@ -59,16 +55,16 @@
 }
 
 .button {
-    @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-400;
+    @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-700;
 }
 
 .border-test {
     @apply border-black border-dashed border-2
 }
 
-  .resizer {
+.resizer {
     @apply w-1 cursor-ew-resize bg-gray-50 h-full
-  }
+}
 
 
 /* Dropdown menu */
@@ -95,7 +91,7 @@
 }
 
 .white-scrollable {
-    @apply bg-white h-full overflow-y-auto;
+    @apply bg-white h-full overflow-y-auto
 }
 
 .editor-flex {
@@ -114,3 +110,41 @@
     @apply mr-4;
 }
 
+
+/*LangButton*/
+
+.lang-item-button {
+    @apply bg-zinc-200 border-spacing-4 p-3 mb-4 border-4 bg-gradient-to-r from-gray-300 border-neutral-400 shadow-md rounded-md flex items-center justify-between text-gray-800;
+}
+
+.lang-item-button:hover {
+    @apply bg-zinc-400 cursor-pointer text-white;
+}
+
+.lang-item-button.selected {
+    @apply bg-zinc-500 border-neutral-500 text-white;
+}
+
+.lang-item-title {
+    @apply w-full text-center font-mono text-ellipsis text-xl font-semibold;
+}
+
+/*TaskButton*/
+
+.task-item-button {
+    @apply bg-zinc-200 border-spacing-4 p-3 mb-4 border-4 bg-gradient-to-r from-gray-300 border-neutral-400 shadow-md rounded-md flex items-center justify-between text-gray-800;
+}
+
+.task-item-button:hover {
+    @apply bg-zinc-400 cursor-pointer text-gray-600
+}
+
+.task-item-title {
+    @apply w-full text-ellipsis text-base font-bold;
+}
+
+.task-item-content {
+    @apply w-full text-ellipsis text-sm font-semibold text-gray-800;
+}
+
+/*used to lock the navbar without moving all components down which creates an unnecessary scroll whell*/
