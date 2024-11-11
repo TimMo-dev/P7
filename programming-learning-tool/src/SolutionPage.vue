@@ -129,12 +129,12 @@ function navigate(path: string) {
             <MenuItems class="dropdown-menu-items">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                <a href="#" @click.prevent="submitProgLanguage('python')"
-                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
+                  <a href="#" @click.prevent="submitProgLanguage('python')"
+                    :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                <a href="#" @click.prevent="submitProgLanguage('c')"
-                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
+                  <a href="#" @click.prevent="submitProgLanguage('c')"
+                    :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -202,30 +202,38 @@ function navigate(path: string) {
         </div>
       </template>
 
-      <!-- Bottom container -->
+      <!-- Bottom containers -->
       <template v-slot:bottom>
         <div class="bottom-containers-wrapper h-full">
-          <div class="bottom-container">
-            <a class="absolute-text">
-              Feedback:
-            </a>
-            <div class="bg-white h-full overflow-y-auto">
-              <div class="mx-4 my-8">
-                test
+          <!-- Left Bottom Container -->
+          <VerticalResizablePanels>
+            <template v-slot:left>
+              <div class="bottom-container">
+                <a class="absolute-text">
+                  Feedback:
+                </a>
+                <div class="bg-white h-full overflow-y-auto">
+                  <div class="mx-4 my-8">
+                    test
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="bottom-container">
-        <a class="absolute-text">
-          Output:
-        </a>
-        <div class="bg-white h-20 overflow-y-auto">
-          <div class="mx-4 my-8">
-            Output from terminal: {{ terminalOutput }}
-          </div>
+            </template>
+            <!-- Right Bottom Container -->
+            <template v-slot:right>
+              <div class="bottom-container">
+                <a class="absolute-text">
+                  Output:
+                </a>
+                <div class="bg-white h-full overflow-y-auto">
+                  <div class="mx-4 my-8">
+                    Output from terminal: {{ terminalOutput }}
+                  </div>
+                </div>
+              </div>
+            </template>
+          </VerticalResizablePanels>
         </div>
-      </div>
-    </div>
       </template>
     </HorizontalResizablePanels>
   </div>
