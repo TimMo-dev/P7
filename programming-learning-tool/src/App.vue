@@ -19,17 +19,32 @@ const routes: Route = {
 };
 
 const currentPath = ref(window.location.hash.slice(1) || '/');
+const queryParams = ref<{ [key: string]: string }>({});
 
-window.addEventListener('hashchange', () => {
-  currentPath.value = window.location.hash.slice(1) || '/';
-})
+function updatePathAndQueryParams() {
+  const [path, query] = window.location.hash.slice(1).split('?');
+  currentPath.value = path || '/';
+
+  // Parse query parameters and store them in a reactive object
+  queryParams.value = {};
+  if (query) {
+    new URLSearchParams(query).forEach((value, key) => {
+      queryParams.value[key] = value;
+    });
+  }
+}
+
+window.addEventListener('hashchange', updatePathAndQueryParams);
+
+// Initialize path and query parameters on load
+updatePathAndQueryParams();
 
 const CurrentPage = computed(() => {
-  return routes[currentPath.value] || TasksPage; // Default to TasksPage if the route is not found
+  return routes[currentPath.value] || TasksPage;
 });
 
 </script>
 
 <template>
-  <component :is="CurrentPage" />
+  <component :is="CurrentPage" v-bind="queryParams" />
 </template>
