@@ -2,9 +2,6 @@
 import { ref, computed } from 'vue'
 import type { Component } from 'vue'
 
-import { ref, computed } from 'vue'
-import type { Component } from 'vue'
-
 import SolutionPage from './SolutionPage.vue';
 import TasksPage from './TasksPage.vue';
 import TestPage from './TestPage.vue'; 
