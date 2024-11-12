@@ -13,6 +13,7 @@ const serverHost: string = "http://localhost:5001";
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
+const terminalOutput = ref<string>('');
 
 const submitCode = async (): Promise<void> => {
   try {
@@ -41,10 +42,20 @@ const submitCode = async (): Promise<void> => {
       throw new Error(`Error: ${response.statusText}`);
     }
 
-    // You can handle the response further, like displaying it to the user
+    // Parse the response JSON
+    const result = await response.json();
+
+    // Check if there is an error in the response
+    if (result.forwardedResponse.error) {
+      terminalOutput.value = result.forwardedResponse.error.trim();
+    } else {
+      terminalOutput.value = result.forwardedResponse.output.trim();
+    }
+
     console.log('Compilation request was successful');
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error submitting code:', error);
+    terminalOutput.value = 'Error submitting code: ' + error.message;
   }
 };
 
@@ -118,12 +129,12 @@ function navigate(path: string) {
             <MenuItems class="dropdown-menu-items">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                <a href="#" @click.prevent="submitProgLanguage('python')"
-                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
+                  <a href="#" @click.prevent="submitProgLanguage('python')"
+                    :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">Python</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                <a href="#" @click.prevent="submitProgLanguage('c')"
-                  :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
+                  <a href="#" @click.prevent="submitProgLanguage('c')"
+                    :class="[active ? 'hover-dropdown-item' : 'non-hover-dropdown-item', 'dropdown-menu-item ']">C</a>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -191,19 +202,37 @@ function navigate(path: string) {
         </div>
       </template>
 
-      <!-- Bottom container -->
+      <!-- Bottom containers -->
       <template v-slot:bottom>
         <div class="bottom-containers-wrapper h-full">
-          <div class="bottom-container">
-            <a class="absolute-text">
-              Feedback:
-            </a>
-            <div class="bg-white h-full overflow-y-auto">
-              <div class="mx-4 my-8">
-                test
+          <!-- Left Bottom Container -->
+          <VerticalResizablePanels>
+            <template v-slot:left>
+              <div class="bottom-container relative">
+                <a class="absolute-text">
+                  Feedback:
+                </a>
+                <div class="bg-white h-full overflow-y-auto">
+                  <div class="mx-4 my-8">
+                    test
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </template>
+            <!-- Right Bottom Container -->
+            <template v-slot:right>
+              <div class="bottom-container relative">
+                <a class="absolute-text">
+                  Output:
+                </a>
+                <div class="bg-white h-full overflow-y-auto">
+                  <div class="mx-4 my-8">
+                    Output from terminal: {{ terminalOutput }}
+                  </div>
+                </div>
+              </div>
+            </template>
+          </VerticalResizablePanels>
         </div>
       </template>
     </HorizontalResizablePanels>
