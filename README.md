@@ -45,7 +45,6 @@ npm run build
 npm run test:unit
 ```
 
-# Kubernetes cluster
 > [!CAUTION]
 > Use port 5000 for the docker port when running the image!
 > It is the only port that the container is currently listening on (will be changed when moving to Kubernetes).
@@ -64,7 +63,8 @@ Only run once.
 Creating the cluster and building the image
 ```sh
 k3d cluster create compileCluster --api-port 6550 --port "8080:80@loadbalancer" 
-docker build -t python-interpreter .
+docker build -t python-interpreter -f python.Dockerfile .
+docker build -t gcc-compiler -f gcc-compiler.Dockerfile .
 ```
 
 Might be needed if k3d does not correctly configure the api port
@@ -75,12 +75,15 @@ kubectl config set-cluster k3d-compileCluster --server=https://localhost:6550
 Import the image into the k3d cluster for creation of pods.
 ```sh
 k3d image import python-interpreter:latest -c compileCluster
+k3d image import gcc-compiler:latest -c compileCluster
 ```
 
 Apply the deploy, service and ingress yaml files.
 ```sh
 kubectl apply -f pythonDeploy.yaml
 kubectl apply -f pythonService.yaml
+kubectl apply -f cDeploy.yaml
+kubectl apply -f cService.yaml
 kubectl apply -f Ingress.yaml
 ```
 
