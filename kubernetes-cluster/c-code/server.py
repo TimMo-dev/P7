@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-@app.route('/compile', methods=['POST'])
+@app.route('/compile/c', methods=['POST'])
 def compile_code():
     data = request.get_json()
     code = data.get('code', '')
