@@ -60,7 +60,7 @@ This will ensure port 8080 is used on the localhost and is mapped to port 5000 i
 
 ## For creating a cluster, use the following commands (assuming k3d is already installed):
 
-Only run once.
+Only run once. Run from the Kubernetes directory.
 Creating the cluster and building the image
 ```sh
 k3d cluster create compileCluster --api-port 6550 --port "8080:80@loadbalancer" 
