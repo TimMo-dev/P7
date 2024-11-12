@@ -69,7 +69,7 @@ const submitCode = async (): Promise<void> => {
 // Reactive state for toggling the dropdown
 const isOpen = ref<boolean>(false);
 
-const submitProgLanguage = (language: string): void => {
+const submitProgLanguage = async (language: string): Promise<void> => {
   // Close the dropdown immediately after a selection is made
   isOpen.value = false;
 
@@ -78,10 +78,9 @@ const submitProgLanguage = (language: string): void => {
 
   // Load the default code for the selected language
   if (editor) {
-    loadDefaultCode(language).then(newCode => {
-      editor.setValue(newCode);
-      monaco.editor.setModelLanguage(editor.getModel()!, language);
-    });
+    const newCode = await loadDefaultCode(language);
+    editor.setValue(newCode);
+    monaco.editor.setModelLanguage(editor.getModel()!, language);
   }
 };
 // Reference for the editor container
@@ -91,24 +90,22 @@ const monacoContainer = ref<HTMLDivElement | null>(null);
 let editor: monaco.editor.IStandaloneCodeEditor | null = null;
 
 // Initialize the Monaco Editor when the component is mounted
-onMounted(() => {
+onMounted(async () => {
   if (monacoContainer.value) {
-    loadDefaultCode(selectedProgLanguage.value).then(initialCode => {
-      editor = monaco.editor.create(monacoContainer.value, {
-        value: initialCode, // Set the initial code snippet
-        language: selectedProgLanguage.value, // Set the initial language
-        theme: "vs", // Editor theme (vs, vs-dark, hc-black)
-        automaticLayout: true,
-      });
-      watch(selectedProgLanguage, (newLanguage) => {
-        if (editor) {
-          loadDefaultCode(newLanguage).then(newCode => {
-            editor.setValue(newCode);
-            monaco.editor.setModelLanguage(editor.getModel()!, newLanguage);
-          });
-        }
-      });
+    const initialCode = await loadDefaultCode(selectedProgLanguage.value);
+    editor = monaco.editor.create(monacoContainer.value, {
+      value: initialCode, // Set the initial code snippet
+      language: selectedProgLanguage.value, // Set the initial language
+      theme: "vs", // Editor theme (vs, vs-dark, hc-black)
+      automaticLayout: true,
     });
+    watch(selectedProgLanguage, async (newLanguage) => {
+      if (editor) {
+        const newCode = await loadDefaultCode(newLanguage);
+        editor.setValue(newCode);
+        monaco.editor.setModelLanguage(editor.getModel()!, newLanguage);
+      }
+    })
   }
 });
 
