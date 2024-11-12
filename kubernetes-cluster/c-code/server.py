@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 import subprocess
-import os
 
 app = Flask(__name__)
 
