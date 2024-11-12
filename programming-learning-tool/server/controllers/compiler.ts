@@ -1,14 +1,17 @@
-import express from 'express';
 import http from 'http';
 
-export function ForwardToCompiler (req ,res) 
+interface CompileRequestBody {
+    language: string;
+    codeArea: string;
+}
+export function ForwardToCompiler (req: Request, res: Response) 
 {
 
     
     const port = 5001;
     const address = "localhost"
     
-    const { language, codeArea } = req.body;
+    const { language, codeArea } = req.body as unknown as CompileRequestBody;
     
     console.log('Selected programming language:', language);
     console.log('Code:', codeArea);
