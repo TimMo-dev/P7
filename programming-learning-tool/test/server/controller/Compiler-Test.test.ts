@@ -12,7 +12,8 @@ describe('ForwardToCompiler', () => {
 
     beforeEach(() => {
         req = {
-            body: { language: 'python', codeArea: 'print("Hello, world!");' }
+            params: {language: 'python'},
+            body: {codeArea: 'print("Hello, world!");' }
         };
 
         res = {
@@ -49,7 +50,7 @@ describe('ForwardToCompiler', () => {
             {
                 hostname: 'localhost',
                 port: 8080,
-                path: '/compile',
+                path: `/compile/${req.params.language}`,
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
             },
