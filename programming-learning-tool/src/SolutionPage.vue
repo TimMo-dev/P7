@@ -24,12 +24,11 @@ const submitCode = async (): Promise<void> => {
 
     // Construct the request body
     const body = JSON.stringify({
-      language: selectedProgLanguage.value,
       codeArea: codeAreaContent.value
     });
 
-    // Make a POST request to the /compile endpoint with codeAreaContent and language in the body
-    const response = await fetch(`${serverHost}/compile`, {
+    // Make a POST request to the /compile/:language endpoint with codeAreaContent in the body
+    const response = await fetch(`${serverHost}/compile/${selectedProgLanguage.value}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // Set the content type to JSON
