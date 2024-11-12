@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: c-interpreter-service
+spec:
+  selector:
+    app: c-interpreter-pods
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP

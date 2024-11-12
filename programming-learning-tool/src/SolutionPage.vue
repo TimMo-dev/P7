@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
+import { onMounted, onBeforeUnmount, ref, watch, computed } from 'vue';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import HorizontalResizablePanels from './components/HorizontalResizablePanels.vue'
@@ -7,6 +7,7 @@ import VerticalResizablePanels from './components/VerticalResizablePanels.vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
+import { loadDefaultCode } from './utils/loadDefaultCode';
 
 const serverHost: string = "http://localhost:5001";
 
@@ -15,7 +16,14 @@ const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
 const terminalOutput = ref<string>('');
 
+// Default code snippet
+const defaultCode = `# Write your code here\nprint("Hello, World!")`;
+
 const submitCode = async (): Promise<void> => {
+  if (isSubmitDisabled.value) {
+    alert('Please select a programming language before submitting.');
+    return;
+  }
   try {
     // Get the code content from the editor
     if (editor) {
@@ -24,12 +32,11 @@ const submitCode = async (): Promise<void> => {
 
     // Construct the request body
     const body = JSON.stringify({
-      language: selectedProgLanguage.value,
       codeArea: codeAreaContent.value
     });
 
-    // Make a POST request to the /compile endpoint with codeAreaContent and language in the body
-    const response = await fetch(`${serverHost}/compile`, {
+    // Make a POST request to the /compile/:language endpoint with codeAreaContent in the body
+    const response = await fetch(`${serverHost}/compile/${selectedProgLanguage.value}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // Set the content type to JSON
@@ -62,12 +69,19 @@ const submitCode = async (): Promise<void> => {
 // Reactive state for toggling the dropdown
 const isOpen = ref<boolean>(false);
 
-const submitProgLanguage = (language: string): void => {
+const submitProgLanguage = async (language: string): Promise<void> => {
   // Close the dropdown immediately after a selection is made
   isOpen.value = false;
 
   // Update button text to the selected language
   selectedProgLanguage.value = language;
+
+  // Load the default code for the selected language
+  if (editor) {
+    const newCode = await loadDefaultCode(language);
+    editor.setValue(newCode);
+    monaco.editor.setModelLanguage(editor.getModel()!, language);
+  }
 };
 // Reference for the editor container
 const monacoContainer = ref<HTMLDivElement | null>(null);
@@ -76,16 +90,19 @@ const monacoContainer = ref<HTMLDivElement | null>(null);
 let editor: monaco.editor.IStandaloneCodeEditor | null = null;
 
 // Initialize the Monaco Editor when the component is mounted
-onMounted(() => {
+onMounted(async () => {
   if (monacoContainer.value) {
+    const initialCode = await loadDefaultCode(selectedProgLanguage.value);
     editor = monaco.editor.create(monacoContainer.value, {
-      value: codeAreaContent.value,
-      language: '', // Specify the language (e.g., python, javascript, etc.)
+      value: initialCode, // Set the initial code snippet
+      language: selectedProgLanguage.value, // Set the initial language
       theme: "vs", // Editor theme (vs, vs-dark, hc-black)
       automaticLayout: true,
     });
-    watch(selectedProgLanguage, (newLanguage) => {
+    watch(selectedProgLanguage, async (newLanguage) => {
       if (editor) {
+        const newCode = await loadDefaultCode(newLanguage);
+        editor.setValue(newCode);
         monaco.editor.setModelLanguage(editor.getModel()!, newLanguage);
       }
     })
@@ -102,6 +119,8 @@ onBeforeUnmount(() => {
 function navigate(path: string) {
   window.location.hash = path;
 }
+
+const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select');
 </script>
 
 <template>

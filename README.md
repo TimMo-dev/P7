@@ -60,11 +60,12 @@ This will ensure port 8080 is used on the localhost and is mapped to port 5000 i
 
 ## For creating a cluster, use the following commands (assuming k3d is already installed):
 
-Only run once.
+Only run once. Run from the Kubernetes directory.
 Creating the cluster and building the image
 ```sh
 k3d cluster create compileCluster --api-port 6550 --port "8080:80@loadbalancer" 
-docker build -t python-interpreter .
+docker build -t python-interpreter -f python.Dockerfile .
+docker build -t gcc-compiler -f gcc-compiler.Dockerfile .
 ```
 
 Might be needed if k3d does not correctly configure the api port
@@ -75,12 +76,15 @@ kubectl config set-cluster k3d-compileCluster --server=https://localhost:6550
 Import the image into the k3d cluster for creation of pods.
 ```sh
 k3d image import python-interpreter:latest -c compileCluster
+k3d image import gcc-compiler:latest -c compileCluster
 ```
 
 Apply the deploy, service and ingress yaml files.
 ```sh
 kubectl apply -f pythonDeploy.yaml
 kubectl apply -f pythonService.yaml
+kubectl apply -f cDeploy.yaml
+kubectl apply -f cService.yaml
 kubectl apply -f Ingress.yaml
 ```
 

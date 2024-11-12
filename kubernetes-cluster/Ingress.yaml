@@ -9,10 +9,17 @@ spec:
     - host: localhost
       http:
         paths:
-          - path: /compile
+          - path: /compile/python
             pathType: Prefix
             backend:
               service:
                 name: python-interpreter-service
+                port:
+                  number: 80
+          - path: /compile/c
+            pathType: Prefix
+            backend:
+              service:
+                name: c-interpreter-service
                 port:
                   number: 80
