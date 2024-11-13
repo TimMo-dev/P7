@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
  
 async function call_python_compiler_API(input: string): Promise<string> {
-    const url:string = 'http://localhost:8080/compile';
+    const url:string = 'http://localhost:8080/compile/python';
     const headers = {
         'Content-Type': 'application/json',
     };
