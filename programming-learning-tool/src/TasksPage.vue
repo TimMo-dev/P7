@@ -39,7 +39,7 @@ const selectLanguage = (language: string) => {
           
           <TaskButton title="Hello World!"
                       content="Write a program that prints 'Hello world!'"
-                      redirect="/solution" />
+                      redirect="/solution?id=2" />
                     
           <TaskButton title="How to pointers work" 
                       content="Learn how pointers work in C and complete an exercise"

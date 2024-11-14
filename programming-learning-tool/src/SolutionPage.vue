@@ -9,6 +9,10 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
 import { loadDefaultCode } from './utils/loadDefaultCode';
 
+defineProps<{
+  id?: string;
+}>();
+
 const serverHost: string = "http://localhost:5001";
 
 // Declare reactive variables to store the textarea content and selected programming language
@@ -184,7 +188,7 @@ const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select')
                 </a>
                 <div class="white-scrollable">
                   <div class="mx-4 my-8">
-                    test
+                    [Insert task description for task {{id}} here]
                   </div>
                 </div>
               </div>
