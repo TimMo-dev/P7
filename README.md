@@ -109,3 +109,10 @@ npm install @types/express --save-dev
 To start the server: 
 
 - npx tsx routes/server.ts
+
+# LlamaAPI
+
+Make sure to create a ```.env``` file in the ```./programming-learning-tool``` directory
+
+Write the following in the environment file: ```VITE_LLAMA_API_KEY = [INSERT_API_KEY_HERE]```
+- Make sure to replace the square brackets with the actual API key
