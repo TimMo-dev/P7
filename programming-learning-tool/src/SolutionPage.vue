@@ -8,12 +8,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
 import { loadDefaultCode } from './utils/loadDefaultCode';
+import { SERVER_PORT, SERVER_ADDRESS } from '../.config/project.config';
 
 defineProps<{
   id?: string;
 }>();
 
-const serverHost: string = "http://localhost:5001";
+const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');

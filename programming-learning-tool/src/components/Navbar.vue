@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { SERVER_ADDRESS, SERVER_PORT } from '../../.config/project.config';
 import { ref } from 'vue';
 
 // Reactive state for toggling the dropdown
@@ -14,7 +15,7 @@ const toggleNavbar = (): void => {
 const toggleDropdown = (): void => {
   isOpen.value = !isOpen.value;
 };
-const serverHost:string = "http://localhost:5001";
+const serverHost:string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 const submitLanguage = async (selectedLanguage: string): Promise<void> => {
   try {

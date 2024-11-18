@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
+import { INGRESS_ADDRESS, INGRESS_PORT } from '../.config/project.config';
  
 async function call_python_compiler_API(input: string): Promise<string> {
-    const url:string = 'http://localhost:8080/compile/python';
+    const url:string = `http://${INGRESS_ADDRESS}:${INGRESS_PORT}/compile/python`;
     const headers = {
         'Content-Type': 'application/json',
     };
