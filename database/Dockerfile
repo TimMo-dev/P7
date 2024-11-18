@@ -3,6 +3,11 @@ FROM postgres:latest
 ENV POSTGRES_USER=user
 ENV POSTGRES_PASSWORD=password
 ENV POSTGRES_DB=database
+ENV PGDATA /var/lib/postgresql/data
+
+RUN chown -R postgres:postgres /var/lib/postgresql/data
+
+RUN chmod -R 700 /var/lib/postgresql/data
 
 EXPOSE 5431
 
