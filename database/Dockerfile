@@ -3,6 +3,7 @@ FROM postgres:latest
 ENV POSTGRES_USER=user
 ENV POSTGRES_PASSWORD=password
 ENV POSTGRES_DB=database
+ENV PGDATA=/var/lib/postgresql/data/some_name/
 
 EXPOSE 5431
 
