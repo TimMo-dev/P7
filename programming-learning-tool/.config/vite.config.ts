@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { VITE_PORT } from './project.config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,7 +10,7 @@ export default defineConfig({
     vue(),
   ],
   server: {
-    port: 3000,
+    port: VITE_PORT,
   },
   resolve: {
     alias: {
