@@ -3,7 +3,7 @@ FROM postgres:latest
 ENV POSTGRES_USER=user
 ENV POSTGRES_PASSWORD=password
 ENV POSTGRES_DB=database
-ENV PGDATA /var/lib/postgresql/data
+ENV PGDATA /var/lib/postgresql/data/db-files/
 
 RUN chown -R postgres:postgres /var/lib/postgresql/data
 
