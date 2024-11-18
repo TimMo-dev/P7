@@ -132,12 +132,15 @@ function navigate(path: string) {
 
       <!-- Right Top Container -->
       <div class="container-buttons">
-        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           @click="submitCode">
           Submit
         </button>
-        <button type="button" class="button mx-2 text-white font-bold" @click="GetFeedback">
+        <button type="button" class="button mx-2 text-white font-bold">
           Run
+        </button>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="GetFeedback">
+          Get Feedback
         </button>
       </div>
     </div>
