@@ -96,16 +96,22 @@ k3d cluster start compileCluster
 k3d cluster stop compileCluster
 ```
 
-# Server setup
-Run the following commands in the 'server' directory: 
+# Database
+Database is setup as a containerized database.
+It is currently configured to run at localhost: 5431 
 
+CD into the P7/database and then run this command: 
 ```sh
-npm install express
-npm install tsx
-npm install cors
-npm install @types/express --save-dev
+docker build -t testdb . 
 ```
 
-To start the server: 
+The image can then be run: 
 
-- npx tsx routes/server.ts
+```sh
+docker run --name test_database -p 5431:5431 testdb
+```
+
+To start an existing container
+```sh
+docker start test_databse -i
+```
