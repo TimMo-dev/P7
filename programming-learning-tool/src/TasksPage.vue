@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import LangButton from './components/LangButton.vue';
 import TaskButton from './components/TaskButton.vue';
 
 const selectedLanguage = ref<string | null>(null);
 const tasks = ref<Array<{ title: string, description: string, taskid: number }>>([]);
+
+const router = useRouter();
 
 // Function to set the selected language
 const selectLanguage = (language: string) => {
@@ -20,6 +23,11 @@ const fetchTasks = async () => {
   } catch (error) {
     console.error('Error fetching tasks:', error);
   }
+};
+
+// Handle navigation to the SolutionPage
+const navigateToSolution = (taskId: number) => {
+  router.push({ path: '/solution', query: { id: taskId.toString() } });
 };
 
 onMounted(() => {
@@ -55,7 +63,8 @@ onMounted(() => {
             :key="task.taskid"
             :title="task.title"
             :content="task.description"
-            :redirect="`/solution?id=${task.taskid}`"
+            :taskId="task.taskid"
+            @navigate="navigateToSolution"
           />
         </div>
       </div>
