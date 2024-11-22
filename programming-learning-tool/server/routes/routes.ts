@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import * as compilercontroller from '../controllers/compiler';
-import { getTasks } from '../controllers/tasks';
+import { getTasks, getTaskById } from '../controllers/tasks';
 
 
 const port = 5001;
@@ -18,6 +18,6 @@ server.post('/compile/:language', (req, res) => {
 })
 
 server.get('/tasks', getTasks);
-
+server.get('/tasks/:id', getTaskById);
 
 export { server } 

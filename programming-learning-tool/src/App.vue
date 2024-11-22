@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { Component } from 'vue'
 
@@ -47,4 +47,13 @@ const CurrentPage = computed(() => {
 
 <template>
   <component :is="CurrentPage" v-bind="queryParams" />
+</template> -->
+
+<template>
+  <router-view />
 </template>
+
+<script setup lang="ts">
+// import { ref, computed } from 'vue';
+// import { useRoute } from 'vue-router';
+</script>

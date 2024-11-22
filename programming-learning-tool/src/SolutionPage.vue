@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, watch, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import HorizontalResizablePanels from './components/HorizontalResizablePanels.vue'
@@ -8,10 +9,6 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
 import { loadDefaultCode } from './utils/loadDefaultCode';
-
-defineProps<{
-  id?: string;
-}>();
 
 const serverHost: string = "http://localhost:5001";
 
@@ -93,8 +90,31 @@ const monacoContainer = ref<HTMLDivElement | null>(null);
 // Editor instance
 let editor: monaco.editor.IStandaloneCodeEditor | null = null;
 
+// Fetch task details from the backend
+const fetchTaskDetails = async (taskId: number) => {
+  console.log('Fetching task details for ID:', taskId); // Debugging statement
+  try {
+    const response = await fetch(`http://localhost:5001/tasks/${taskId}`);
+    if (response.ok) {
+      task.value = await response.json();
+      console.log('Task details fetched:', task.value); // Debugging statement
+    } else {
+      console.error('Failed to fetch task details:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error fetching task details:', error);
+  }
+};
+
 // Initialize the Monaco Editor when the component is mounted
 onMounted(async () => {
+  // Fetch task details
+  const route = useRoute();
+  const taskId = route.query.id;
+  if (taskId) {
+    await fetchTaskDetails(Number(taskId));
+  }
+
   if (monacoContainer.value) {
     const initialCode = await loadDefaultCode(selectedProgLanguage.value);
     editor = monaco.editor.create(monacoContainer.value, {
@@ -120,8 +140,12 @@ onBeforeUnmount(() => {
   }
 });
 
+const task = ref<{ title: string, description: string } | null>(null);
+
+const router = useRouter();
+
 function navigate(path: string) {
-  window.location.hash = path;
+  router.push(path);
 }
 
 const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select');
@@ -187,8 +211,12 @@ const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select')
                   Task Description:
                 </a>
                 <div class="white-scrollable">
-                  <div class="mx-4 my-8">
-                    [Insert task description for task {{id}} here]
+                  <div v-if="task" class="mx-4 my-8">
+                   <div class="task-item-title">{{ task.title }}</div>
+                    <div>{{ task.description }}</div>
+                  </div>
+                  <div v-else>
+                    <p>No task found!</p>
                   </div>
                 </div>
               </div>
