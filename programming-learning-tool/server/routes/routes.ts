@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import cors from 'cors';
 import * as compilercontroller from '../controllers/compiler';
 

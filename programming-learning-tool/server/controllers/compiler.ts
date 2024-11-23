@@ -1,4 +1,4 @@
-import http from 'http';
+import * as http from 'http';
 
 
 export function ForwardToCompiler (req, res) 
