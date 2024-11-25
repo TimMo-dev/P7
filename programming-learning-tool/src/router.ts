@@ -4,6 +4,7 @@ import SolutionPage from './SolutionPage.vue';
 import TestPage from './TestPage.vue';
 
 const routes = [
+  { path: '/', component: TasksPage },
   { path: '/home', component: TasksPage },
   { path: '/solution', component: SolutionPage },
   { path: '/test', component: TestPage },
