@@ -4,8 +4,6 @@ import * as compilercontroller from '../controllers/compiler';
 import { getTasks, getTaskById } from '../controllers/tasks';
 
 
-const port = 5001;
-const address = "localhost"
 
 const server = express()
 

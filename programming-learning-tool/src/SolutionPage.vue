@@ -5,70 +5,45 @@ import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import HorizontalResizablePanels from './components/HorizontalResizablePanels.vue'
 import VerticalResizablePanels from './components/VerticalResizablePanels.vue'
+import * as SubmitCodeAPI from './models/SubmitCodeAPI';
+import * as GetFeedbackAPI from './models/GetFeedbackAPI';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import * as monaco from "monaco-editor";
 import { loadDefaultCode } from './utils/loadDefaultCode';
+import { SERVER_PORT, SERVER_ADDRESS } from '../.config/project.config';
 
-const serverHost: string = "http://localhost:5001";
+const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
 const terminalOutput = ref<string>('');
+const feedbackOutput = ref<string>('');
 
 // Default code snippet
 const defaultCode = `# Write your code here\nprint("Hello, World!")`;
 
-const submitCode = async (): Promise<void> => {
-  if (isSubmitDisabled.value) {
-    alert('Please select a programming language before submitting.');
-    return;
-  }
-  try {
-    // Get the code content from the editor
-    if (editor) {
-      codeAreaContent.value = editor.getValue();
-    }
-
-    // Construct the request body
-    const body = JSON.stringify({
-      codeArea: codeAreaContent.value
-    });
-
-    // Make a POST request to the /compile/:language endpoint with codeAreaContent in the body
-    const response = await fetch(`${serverHost}/compile/${selectedProgLanguage.value}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Set the content type to JSON
-      },
-      body: body,
-    });
-
-    // Check if the request was successful
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
-    }
-
-    // Parse the response JSON
-    const result = await response.json();
-
-    // Check if there is an error in the response
-    if (result.forwardedResponse.error) {
-      terminalOutput.value = result.forwardedResponse.error.trim();
-    } else {
-      terminalOutput.value = result.forwardedResponse.output.trim();
-    }
-
-    console.log('Compilation request was successful');
-  } catch (error: any) {
-    console.error('Error submitting code:', error);
-    terminalOutput.value = 'Error submitting code: ' + error.message;
-  }
-};
-
 // Reactive state for toggling the dropdown
 const isOpen = ref<boolean>(false);
+
+const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select');
+
+// Reference for the editor container
+const monacoContainer = ref<HTMLDivElement | null>(null);
+
+// Editor instance
+let editor: monaco.editor.IStandaloneCodeEditor;
+
+const submitCode = async (): Promise<void> => {
+  terminalOutput.value = await SubmitCodeAPI.POST_code(codeAreaContent.value, selectedProgLanguage.value, isSubmitDisabled.value, editor)
+};
+
+const GetFeedback = async (): Promise<void> => {
+  if (task.value?.description) {
+    feedbackOutput.value = await GetFeedbackAPI.GET_llama_response(task.value?.description, selectedProgLanguage.value, editor.getValue())
+  }
+};
 
 const submitProgLanguage = async (language: string): Promise<void> => {
   // Close the dropdown immediately after a selection is made
@@ -84,17 +59,11 @@ const submitProgLanguage = async (language: string): Promise<void> => {
     monaco.editor.setModelLanguage(editor.getModel()!, language);
   }
 };
-// Reference for the editor container
-const monacoContainer = ref<HTMLDivElement | null>(null);
-
-// Editor instance
-let editor: monaco.editor.IStandaloneCodeEditor | null = null;
-
 // Fetch task details from the backend
 const fetchTaskDetails = async (taskId: number) => {
   console.log('Fetching task details for ID:', taskId); // Debugging statement
   try {
-    const response = await fetch(`http://localhost:5001/tasks/${taskId}`);
+    const response = await fetch(`${serverHost}/tasks/${taskId}`);
     if (response.ok) {
       task.value = await response.json();
       console.log('Task details fetched:', task.value); // Debugging statement
@@ -105,6 +74,7 @@ const fetchTaskDetails = async (taskId: number) => {
     console.error('Error fetching task details:', error);
   }
 };
+
 
 // Initialize the Monaco Editor when the component is mounted
 onMounted(async () => {
@@ -148,7 +118,6 @@ function navigate(path: string) {
   router.push(path);
 }
 
-const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select');
 </script>
 
 <template>
@@ -191,12 +160,15 @@ const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select')
 
       <!-- Right Top Container -->
       <div class="container-buttons">
-        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           @click="submitCode">
           Submit
         </button>
         <button type="button" class="button mx-2 text-white font-bold">
           Run
+        </button>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="GetFeedback">
+          Get Feedback
         </button>
       </div>
     </div>
@@ -265,7 +237,7 @@ const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select')
                 </a>
                 <div class="bg-white h-full overflow-y-auto">
                   <div class="mx-4 my-8">
-                    test
+                    {{ feedbackOutput }}
                   </div>
                 </div>
               </div>
