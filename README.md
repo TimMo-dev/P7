@@ -113,5 +113,5 @@ docker run --name test_database -p 5431:5431 testdb
 
 To start an existing container
 ```sh
-docker start test_databse -i
+docker start test_database -i
 ```
