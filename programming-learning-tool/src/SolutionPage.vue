@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, watch, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import GroupCollapsible from './components/GroupCollapsible.vue';
 import HorizontalResizablePanels from './components/HorizontalResizablePanels.vue'
@@ -12,10 +13,6 @@ import * as monaco from "monaco-editor";
 import { loadDefaultCode } from './utils/loadDefaultCode';
 import { SERVER_PORT, SERVER_ADDRESS } from '../.config/project.config';
 
-defineProps<{
-  id?: string;
-}>();
-
 const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 // Declare reactive variables to store the textarea content and selected programming language
@@ -23,14 +20,13 @@ const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
 const terminalOutput = ref<string>('');
 const feedbackOutput = ref<string>('');
-const taskDescription = ref<string>('Write a program which prints "Hello World!"');
-const solution = ref<string>('');
 
 // Default code snippet
 const defaultCode = `# Write your code here\nprint("Hello, World!")`;
 
 // Reactive state for toggling the dropdown
 const isOpen = ref<boolean>(false);
+
 const isSubmitDisabled = computed(() => selectedProgLanguage.value === 'Select');
 
 // Reference for the editor container
@@ -44,7 +40,9 @@ const submitCode = async (): Promise<void> => {
 };
 
 const GetFeedback = async (): Promise<void> => {
-  feedbackOutput.value = await GetFeedbackAPI.GET_llama_response(taskDescription.value, selectedProgLanguage.value, editor.getValue())
+  if (task.value?.description) {
+    feedbackOutput.value = await GetFeedbackAPI.GET_llama_response(task.value?.description, selectedProgLanguage.value, editor.getValue())
+  }
 };
 
 const submitProgLanguage = async (language: string): Promise<void> => {
@@ -61,9 +59,31 @@ const submitProgLanguage = async (language: string): Promise<void> => {
     monaco.editor.setModelLanguage(editor.getModel()!, language);
   }
 };
+// Fetch task details from the backend
+const fetchTaskDetails = async (taskId: number) => {
+  console.log('Fetching task details for ID:', taskId); // Debugging statement
+  try {
+    const response = await fetch(`${serverHost}/tasks/${taskId}`);
+    if (response.ok) {
+      task.value = await response.json();
+      console.log('Task details fetched:', task.value); // Debugging statement
+    } else {
+      console.error('Failed to fetch task details:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error fetching task details:', error);
+  }
+};
 
 // Initialize the Monaco Editor when the component is mounted
 onMounted(async () => {
+  // Fetch task details
+  const route = useRoute();
+  const taskId = route.query.id;
+  if (taskId) {
+    await fetchTaskDetails(Number(taskId));
+  }
+
   if (monacoContainer.value) {
     const initialCode = await loadDefaultCode(selectedProgLanguage.value);
     editor = monaco.editor.create(monacoContainer.value, {
@@ -89,10 +109,13 @@ onBeforeUnmount(() => {
   }
 });
 
-function navigate(path: string) {
-  window.location.hash = path;
-}
+const task = ref<{ title: string, description: string } | null>(null);
 
+const router = useRouter();
+
+function navigate(path: string) {
+  router.push(path);
+}
 </script>
 
 <template>
@@ -102,7 +125,7 @@ function navigate(path: string) {
     <div class="solution-buttons">
       <!-- Left Top Container -->
       <div class="container-buttons items-center justify-between">
-        <button type="button" class="button m-2" @click="navigate('/tasks')">
+        <button type="button" class="button m-2" @click="navigate('/home')">
           <i class="fa fa-arrow-left text-xl" aria-hidden="true"></i>
         </button>
         <div class="ml-auto mr-2"> Programming Language: </div>
@@ -158,8 +181,12 @@ function navigate(path: string) {
                   Task Description:
                 </a>
                 <div class="white-scrollable">
-                  <div class="mx-4 my-8">
-                    {{taskDescription}}
+                  <div v-if="task" class="mx-4 my-8">
+                   <div class="task-item-title">{{ task.title }}</div>
+                    <div>{{ task.description }}</div>
+                  </div>
+                  <div v-else>
+                    <p>No task found!</p>
                   </div>
                 </div>
               </div>
@@ -208,7 +235,7 @@ function navigate(path: string) {
                 </a>
                 <div class="bg-white h-full overflow-y-auto">
                   <div class="mx-4 my-8">
-                    {{feedbackOutput}}
+                    {{ feedbackOutput }}
                   </div>
                 </div>
               </div>

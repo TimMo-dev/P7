@@ -26,6 +26,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "pg": "^8.13.1",
+    "pg-pool": "^3.7.0",
     "llamaai": "^1.0.4",
     "llamaapi": "^1.0.0",
     "postcss": "^8.4.47",
@@ -36,6 +38,8 @@
     "@tsconfig/node20": "^20.1.4",
     "@types/express": "^5.0.0",
     "@types/jsdom": "^21.1.7",
+    "@types/pg": "^8.11.10",
+    "@types/vue-router": "^2.0.0",
     "@types/node": "^20.17.6",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/test-utils": "^2.4.6",
@@ -47,6 +51,7 @@
     "vite": "^5.4.10",
     "vite-plugin-monaco-editor": "^1.1.0",
     "vitest": "^1.6.0",
+    "vue-router": "^4.4.5",
     "vue-tsc": "^2.0.21"
   }
 }

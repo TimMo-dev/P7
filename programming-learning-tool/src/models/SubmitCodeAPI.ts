@@ -1,7 +1,9 @@
-import {watch, computed } from 'vue';
+import { computed } from 'vue';
 import * as monaco from "monaco-editor";
+import { SERVER_PORT, SERVER_ADDRESS } from '../../.config/project.config';
 
-const serverHost: string = "http://localhost:5001";
+
+const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 let codeAreaContent:string = '';
 let selectedProgLanguage:string = 'Select'; // Default button text
