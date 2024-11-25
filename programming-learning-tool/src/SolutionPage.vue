@@ -75,7 +75,6 @@ const fetchTaskDetails = async (taskId: number) => {
   }
 };
 
-
 // Initialize the Monaco Editor when the component is mounted
 onMounted(async () => {
   // Fetch task details
@@ -117,7 +116,6 @@ const router = useRouter();
 function navigate(path: string) {
   router.push(path);
 }
-
 </script>
 
 <template>
