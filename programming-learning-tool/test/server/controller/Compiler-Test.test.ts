@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ForwardToCompiler } from '../../../server/controllers/compiler';
 import http from 'http'
+import { INGRESS_ADDRESS, INGRESS_PORT } from '../../../.config/project.config';
 
 vi.mock('http')
 
@@ -48,8 +49,8 @@ describe('ForwardToCompiler', () => {
 
         expect(http.request).toHaveBeenCalledWith(
             {
-                hostname: 'localhost',
-                port: 8080,
+                hostname: INGRESS_ADDRESS,
+                port: INGRESS_PORT,
                 path: `/compile/${req.params.language}`,
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
