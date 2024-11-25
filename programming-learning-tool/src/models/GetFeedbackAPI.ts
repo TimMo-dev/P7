@@ -66,8 +66,6 @@ export async function GET_llama_response(task_description:string, programming_la
   Solution Attempt: "${solution_attempt}"
   `;
 
-  console.log(user_prompt);
-
   return get_response(user_prompt, llama);
 }
 
