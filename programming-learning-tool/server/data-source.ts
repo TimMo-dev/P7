@@ -1,6 +1,7 @@
 import "reflect-metadata"
 import  { DataSource }from "typeorm"
-import { ProgrammingTask } from "./models/ProgrammingTask"
+import { fProgrammingTask} from "./models/ProgrammingTask"
+import { fTest } from "./models/Test"
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
@@ -10,7 +11,7 @@ export const AppDataSource = new DataSource({
     database: "database",
     synchronize: true,
     logging: true,
-    entities: [ProgrammingTask],
+    entities: [fProgrammingTask, fTest],
     subscribers: [],
     migrations: [],
 })

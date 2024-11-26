@@ -6,7 +6,7 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class Test
+export class fTest
 {
     //wip as we have to figure out how the tests should be in relation to the generic test containers. 
     @PrimaryColumn("integer")
