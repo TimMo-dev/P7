@@ -1,16 +1,38 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import LangButton from './components/LangButton.vue';
 import TaskButton from './components/TaskButton.vue';
 
 const selectedLanguage = ref<string | null>(null);
+const tasks = ref<Array<{ title: string, description: string, taskid: number }>>([]);
+
+const router = useRouter();
 
 // Function to set the selected language
 const selectLanguage = (language: string) => {
   selectedLanguage.value = language;
 };
+
+// Fetch tasks from the backend
+const fetchTasks = async () => {
+  try {
+    const response = await fetch('http://localhost:5001/tasks');
+    tasks.value = await response.json();
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+  }
+};
+
+// Handle navigation to the SolutionPage
+const navigateToSolution = (taskId: number) => {
+  router.push({ path: '/solution', query: { id: taskId.toString() } });
+};
+
+onMounted(() => {
+  fetchTasks();
+});
 </script>
 
 <template>
@@ -36,26 +58,14 @@ const selectLanguage = (language: string) => {
       </a>
       <div class="white-scrollable">
         <div class="mx-4 my-10">
-          
-          <TaskButton title="Hello World!"
-                      content="Write a program that prints 'Hello world!'"
-                      redirect="/solution?id=2" />
-                    
-          <TaskButton title="How to pointers work" 
-                      content="Learn how pointers work in C and complete an exercise"
-                      redirect="/solution" />
-                    
-          <TaskButton title="Sort the Array" 
-                      content="sort an array of items which are the contents of the list"
-                      redirect="/solution" />
-                    
-          <TaskButton title="How to reverse a binary tree" 
-                      content="good luck!"
-                      redirect="/solution" />
-                    
-          <TaskButton title="Building your own GPT" 
-                      content="its easy!"
-                      redirect="/solution" />
+          <TaskButton
+            v-for="task in tasks"
+            :key="task.taskid"
+            :title="task.title"
+            :content="task.description"
+            :taskId="task.taskid"
+            @navigate="navigateToSolution"
+          />
         </div>
       </div>
     </div>
