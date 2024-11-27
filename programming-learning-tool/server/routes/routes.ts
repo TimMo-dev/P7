@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import cors from 'cors';
 import * as compilercontroller from '../controllers/compiler';
 import { getTasks, getTaskById } from '../controllers/tasks';

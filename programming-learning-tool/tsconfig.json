@@ -23,6 +23,7 @@
    "experimentalDecorators": true,
    "sourceMap": true,
    "allowImportingTsExtensions": true,
-   "noEmit": true
-}
+   "noEmit": true,
+    "allowSyntheticDefaultImports": true
+  }
 }
