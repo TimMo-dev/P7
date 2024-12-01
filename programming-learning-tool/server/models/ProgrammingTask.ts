@@ -13,7 +13,7 @@ export class Programming_Task
     @Column("text")
     title: string
 
-    @OneToOne(()=>Test_Suite)
+    @OneToOne(()=>Test_Suite, {cascade:true})
     @JoinColumn()
     tests: Test_Suite;
 }
