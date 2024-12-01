@@ -1,7 +1,8 @@
-import { PrimaryGeneratedColumn, Column, Entity } from "typeorm";
+import {PrimaryGeneratedColumn, Column, Entity, OneToOne, JoinColumn} from "typeorm";
+import {Test_Suite} from "./Test_Suite.ts";
 
 @Entity()
-export class fProgrammingTask
+export class Programming_Task
 {
     @PrimaryGeneratedColumn() 
     id: number
@@ -12,4 +13,7 @@ export class fProgrammingTask
     @Column("text")
     title: string
 
-} 
+    @OneToOne(()=>Test_Suite)
+    @JoinColumn()
+    tests: Test_Suite;
+}

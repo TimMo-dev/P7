@@ -3,13 +3,24 @@
 //     taskid INTEGER REFERENCES Programming_task
 // );
 
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {Test_Suite} from "./Test_Suite.ts";
 
 @Entity()
-export class fTest
+export class Test
 {
     //wip as we have to figure out how the tests should be in relation to the generic test containers. 
-    @PrimaryColumn("integer")
+    @PrimaryColumn("int")
     id: number
-    
+
+    @Column("text")
+    test_input: string;
+
+    @Column("text")
+    expected_output: string;
+
+    @ManyToOne(()=>Test_Suite, (Test_Suite)=>Test_Suite.tests)
+    test_suite: Test_Suite
+
+
 }
