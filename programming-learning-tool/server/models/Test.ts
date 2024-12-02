@@ -7,7 +7,7 @@ import {Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "
 import {Test_Suite} from "./Test_Suite.ts";
 
 @Entity()
-export class fTest
+export class Test
 {
     //wip as we have to figure out how the tests should be in relation to the generic test containers. 
     @PrimaryColumn("int")
