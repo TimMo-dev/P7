@@ -18,7 +18,7 @@ const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
-const terminalOutput = ref<string>('');
+const clusterOutput = ref<Array<{ code_output: string, passed_tests: string, failed_tests: string }>>([]);
 const feedbackOutput = ref<string>('');
 
 // Default code snippet
@@ -36,7 +36,12 @@ const monacoContainer = ref<HTMLDivElement | null>(null);
 let editor: monaco.editor.IStandaloneCodeEditor;
 
 const submitCode = async (): Promise<void> => {
-  terminalOutput.value = await SubmitCodeAPI.POST_code(codeAreaContent.value, selectedProgLanguage.value, isSubmitDisabled.value, editor)
+  const result = await SubmitCodeAPI.POST_code(codeAreaContent.value, selectedProgLanguage.value, isSubmitDisabled.value, editor);
+  if (typeof result === 'string') {
+    console.error(result);
+  } else {
+    clusterOutput.value = [result];
+  }
 };
 
 const GetFeedback = async (): Promise<void> => {
@@ -248,7 +253,11 @@ function navigate(path: string) {
                 </a>
                 <div class="bg-white h-full overflow-y-auto">
                   <div class="mx-4 my-8">
-                    Output from terminal: {{ terminalOutput }}
+                    <div v-for="output in clusterOutput" :key="output.code_output">
+                      <p>Code Output: {{ output.code_output }}</p>
+                      <p>Passed Tests: {{ output.passed_tests }}</p>
+                      <p>Failed Tests: {{ output.failed_tests }}</p>
+                    </div>
                   </div>
                 </div>
               </div>

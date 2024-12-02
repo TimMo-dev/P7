@@ -44,10 +44,15 @@ export async function POST_code(codeAreaContent:string, selectedProgLanguage:str
       const result = await response.json();
   
       // Check if there is an error in the response
-      if (result.forwardedResponse.error) {
-        return result.forwardedResponse.error.trim();
+      if (result.error) {
+        return result.error;
       } else {
-        return result.forwardedResponse.output.trim();
+        const output = {
+          code_output: result.forwardedResponse.code_output,
+          passed_tests: result.forwardedResponse.passed_tests,
+          failed_tests: result.forwardedResponse.failed_tests
+        };
+        return output;
       }
   
       console.log('Compilation request was successful');

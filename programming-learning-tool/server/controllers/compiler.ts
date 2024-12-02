@@ -9,11 +9,14 @@ export function ForwardToCompiler (req, res)
         const { codeArea } = req.body;
         console.log('Selected programming language:', language);
         console.log('Code:', codeArea);
+        let expec = ["Hello World", 2, "popo"]
+        let user_out = ["Hello World", 5, "pepe"]
+
       
         const options = {
           hostname: INGRESS_ADDRESS,
           port: INGRESS_PORT,
-          path: `/compile/${language}`,
+          path: `/test/code`,
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -21,8 +24,9 @@ export function ForwardToCompiler (req, res)
         };
       
         const data = JSON.stringify({
-          language: language,
-          code: codeArea
+          expected_output: expec,
+          user_output: user_out,
+          code_output: codeArea // Include the code output
         });
       
         const forwardRequest = http.request(options, (forwardResponse) => {
@@ -32,13 +36,17 @@ export function ForwardToCompiler (req, res)
             responseData += chunk;
           });
       
-          
           forwardResponse.on('end', () => {
             console.log('Response from container:', responseData);
-      
+            const parsedResponse = JSON.parse(responseData);
+            const formattedResponse = {
+              code_output: parsedResponse.code_output?.trim(),
+              passed_tests: parsedResponse.passed_tests,
+              failed_tests: parsedResponse.failed_tests
+            };
             res.send({
               message: 'Text forwarded successfully',
-              forwardedResponse: JSON.parse(responseData)
+              forwardedResponse: formattedResponse
             });
           });
         });
@@ -46,4 +54,3 @@ export function ForwardToCompiler (req, res)
         forwardRequest.write(data);
         forwardRequest.end();
 }
-  
