@@ -3,7 +3,6 @@ FROM postgres:latest
 ENV POSTGRES_USER=user
 ENV POSTGRES_PASSWORD=password
 ENV POSTGRES_DB=database
-COPY init.sql /docker-entrypoint-initdb.d/
 ENV PGDATA=/var/lib/postgresql/data/db-files/
 
 EXPOSE 5431
