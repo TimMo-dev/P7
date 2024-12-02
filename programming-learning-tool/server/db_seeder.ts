@@ -60,14 +60,8 @@ export function seed_db() {
 
     //save without cascade
     task_repo.save(p1)
-    test_suite_repo.save(ts1)
-    test_repo.save(t1)
 
     task_repo.save(p2)
-    test_suite_repo.save(ts2)
-    test_repo.save(t2)
 
     task_repo.save(p3)
-    test_suite_repo.save(ts3)
-    test_repo.save(t3)
 }
