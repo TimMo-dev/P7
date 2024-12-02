@@ -27,7 +27,7 @@ Make sure to:
 - Avoid criticizing if nothing noteworthy is bad about the implementation.
 - Do not do further elaboration on something the user did correctly.
 - Avoid repeating feedback as much as possible.
-- Never repeat previously said senteces! Always attempt to say your feedback in a new way.
+- Never repeat previously said sentences! Always attempt to say your feedback in a new way.
 
 If the user prompts with the same solution multiple times, the user needs furhter guidance.
 In that case, make sure your response is becomes more helpful each consecutive response.

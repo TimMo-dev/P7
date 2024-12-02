@@ -135,7 +135,7 @@ function navigate(path: string) {
     <div class="solution-buttons">
       <!-- Left Top Container -->
       <div class="container-buttons items-center justify-between">
-        <button type="button" class="button m-2" @click="navigate('/home')">
+        <button type="button" class="button bg-gray-500 hover:bg-gray-700 m-2" @click="navigate('/home')">
           <i class="fa fa-arrow-left text-xl" aria-hidden="true"></i>
         </button>
         <div class="ml-auto mr-2"> Programming Language: </div>
