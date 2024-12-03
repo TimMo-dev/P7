@@ -1,0 +1,47 @@
+import assert from "assert";
+
+export const fibonacciSequenceHandler = (fn: any) => {
+	try {
+		const tests = [
+			1+1,
+			10,
+			-1+5,
+			18,
+		];
+		const answers = [[0,1], [0,1,1,2,3,5,8,13,21,34], [0,1,1,2],
+        [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597]];
+		for (let i = 0; i < tests.length; i++) {
+			const result = fn(tests[i]);
+			assert.equal(result, answers[i]);
+		}
+		return true;
+	} catch (error: any) {
+		console.log("Error from fibonacciSequenceHandler: ", error);
+		throw new Error(error);
+	}
+};
+
+export const fibonacciSequence: Problem = {
+    taskid: "fibonacciSequence",
+    title: "Return the sum of two numbers."
+    description: <p>
+        "You are given and integers, numFib, which must be used.
+        You must return the an array containing all numbers from the Fibonaci sequence up to that number.
+        The Fibonaaci sequence is a squence of numbers where a number is the sum of the two numbers which came before it.
+        The seqeuence starts with 0,1,1,2 and so on. Meaning that 2 is the result of 1+1, and the number following 2 will be 3."
+        <p>,
+    examples: [
+        {
+            id: 0,
+            input1: 'numFib = 1',
+            outputText: '[0]',
+            reason: "The first number (and all preceeding ones) of the Fibonacci sequence is 0.",
+        },
+        {
+            id: 1,
+            input1: 'a=10',
+            outputText: "[0,1,1,2,3,5,8,13,21,34]",
+            explanation: "following the fibonacci sequence 34 is the tenth number and previous ones are its predecessors.",
+        },
+    ],
+}

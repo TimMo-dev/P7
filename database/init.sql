@@ -18,10 +18,21 @@ CREATE TABLE IF NOT EXISTS Test_Output (
 );
 
 INSERT INTO Programming_task (title, description, preDefVar, ) VALUES
-    ('Addition', 'Return the sum of two numbers.', 'two int variables ''a'' and ''b'' are provided and must be used. You must return the value of the the sum of a and b, which are user given inputs'),
-    ('String Reversal', 'Reverse a given string.', 'the variable ''message'' is provided, it must be the variable used and returned once reversed. '),
-    ('Prime Checker', 'Check if a number is prime.', 'the array ''numbers'' is provided, and must be the one checked for prime members'),
-    ('Fibonacci Sequence', 'Return the nth number in the Fibonacci series.', 'the function fib must take an integer, and return an integer. The Fibonacci sequence here starts as as [0,1,1,2,...]');
+    ('Addition',
+    'Return the sum of two numbers.',
+    'two int variables ''a'' and ''b'' are provided and must be used. You must return the value of the the sum of a and b, which are user given inputs'),
+
+    ('String Reversal',
+    'Reverse a given string.',
+    'the variable ''message'' is provided, it must be the variable used and returned once reversed. '),
+    
+    ('Prime Checker',
+    'Check if a number is prime.',
+    'the array ''numbers'' is provided, and must be the one checked for prime members'),
+    
+    ('Fibonacci Sequence', 
+    'Return the nth number in the Fibonacci series.',
+    'The function fib must take an integer, and return an integer. The Fibonacci sequence here starts as as [0,1,1,2,...].');
 
 INSERT INTO Tests (test_case_id, taskid) VALUES
     (1, 1),  

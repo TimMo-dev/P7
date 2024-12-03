@@ -1,0 +1,46 @@
+import assert from "assert";
+
+export const stringReversalHandler = (fn: any) => {
+	try {
+		const tests = [
+			Olla,
+			Hello,
+			Monad,
+			15+2+17,
+		];
+		const answers = [allO, olleH, danoM, 71+2+51];
+		for (let i = 0; i < tests.length; i++) {
+			const result = fn(tests[i]);
+			assert.equal(result, answers[i]);
+		}
+		return true;
+	} catch (error: any) {
+		console.log("Error from stringReversalHandler: ", error);
+		throw new Error(error);
+	}
+};
+
+export const stringReversal: Problem = {
+    taskid: "stringReversal",
+    title: "Return a string with a reversed order"
+    description: <p>
+        "You are given the unassigned string.
+        You must return the string in the opposite order"
+        <p>,
+    examples: [
+        {
+            id: 0,
+            input: 'input = "Taxi",
+            outputText: 'ixaT',
+            reason: "the last char of "Taxi" is i, therefore it should be the first
+            of the output and a is the second last and so on.",
+        },
+        {
+            id: 1,
+            input1: 'input = "Taco cat',
+            outputText: "tac ocaT",
+            explanation: "despite Taco cat in some sense being a palindrome, the space
+            makes it come out a bit different that one might expect, keep all characters in mind.",
+        },
+    ],
+}

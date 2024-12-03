@@ -1,0 +1,46 @@
+import assert from "assert";
+
+export const additionHandler = (fn: any) => {
+	try {
+		const tests = [
+			1+1,
+			2+4,
+			-1+0,
+			15+100000,
+		];
+		const answers = [2, 6, -1, 100015];
+		for (let i = 0; i < tests.length; i++) {
+			const result = fn(tests[i]);
+			assert.equal(result, answers[i]);
+		}
+		return true;
+	} catch (error: any) {
+		console.log("Error from additionHandler: ", error);
+		throw new Error(error);
+	}
+};
+
+export const addition: Problem = {
+    taskid: "addition",
+    title: "Return the sum of two numbers."
+    description: <p>
+        "You are given two integers, a and b, which must be used.
+        You must return the sum of a and b, which are user given inputs"
+        <p>,
+    examples: [
+        {
+            id: 0,
+            input1: 'a = 1',
+            input2 'b = 15',
+            outputText: '16',
+            reason: "1 plus 15 is equals to 16",
+        },
+        {
+            id: 1,
+            input1: 'a=-12',
+            input2: 'b=15',
+            outputText: "3",
+            explanation: "-12 plus 15 is equals to 3",
+        },
+    ],
+}

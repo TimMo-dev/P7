@@ -1,0 +1,46 @@
+import assert from "assert";
+
+export const primeCheckerHandler = (fn: any) => {
+	try {
+		const tests = [
+			1+1,
+			7,
+			2,
+			115,
+		];
+		const answers = [true, true, true, false];
+		const answers = [allO, olleH, danoM, 71+2+51];
+		for (let i = 0; i < tests.length; i++) {
+			const result = fn(tests[i]);
+			assert.equal(result, answers[i]);
+		}
+		return true;
+	} catch (error: any) {
+		console.log("Error from primeCheckerHandler: ", error);
+		throw new Error(error);
+	}
+};
+
+export const primerChecker: Problem = {
+    taskid: "primeChecker",
+    title: "Check if a number is prime"
+    description: <p>
+        "You are given the unassigned variable.
+        Give the variable a value and write a function to check if it is prime.
+        Your ourput will be true or false, true represents the output being prime"
+        <p>,
+    examples: [
+        {
+            id: 0,
+            input: 'input = "Taxi",
+            outputText: 'false',
+            reason: "Taxi is not a number, and as such it cannot be prime.",
+        },
+        {
+            id: 1,
+            input1: 'input = "17',
+            outputText: "true",
+            explanation: "17 is not divisible to a whole number, except by diving by 1 or by 17",
+        },
+    ],
+}
