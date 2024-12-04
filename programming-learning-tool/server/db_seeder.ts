@@ -1,4 +1,3 @@
-import {getConnection} from "typeorm";
 import {Programming_Task} from "./models/ProgrammingTask.ts";
 import {Test} from "./models/Test.ts";
 import {Test_Suite} from "./models/Test_Suite.ts";
@@ -8,8 +7,6 @@ export function seed_db() {
 
     //drop all tables before seed
     const task_repo = AppDataSource.getRepository(Programming_Task)
-    const test_suite_repo = AppDataSource.getRepository(Test_Suite)
-    const test_repo = AppDataSource.getRepository(Test)
 
     task_repo.clear().catch((error)=>console.log(error));
 
@@ -21,6 +18,7 @@ export function seed_db() {
     t1.test_input = "test"
     t1.expected_output = "test"
     t1.test_suite = ts1
+    ts1.tests = [t1]
 
     const p1 = new Programming_Task()
     p1.description = "Print 'Hello World' in the console"
@@ -35,6 +33,7 @@ export function seed_db() {
     t2.test_input = "test"
     t2.expected_output = "test"
     t2.test_suite = ts2
+    ts2.tests = [t2]
 
     const p2 = new Programming_Task()
     p2.description = "Reverse a string";
@@ -49,6 +48,7 @@ export function seed_db() {
     t3.test_input = "test"
     t3.expected_output = "test"
     t3.test_suite = ts3
+    ts3.tests = [t3]
 
     const p3 = new Programming_Task()
     p3.title = "fizzbuzz";
