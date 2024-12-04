@@ -14,8 +14,12 @@ server.use(express.json()); // Parse JSON bodies
 
 server.post('/compile/:language', (req, res) => {
   compilercontroller.ForwardToCompiler(req, res, (compilerResponse) => {
-    req.body.compiledCode = compilerResponse.output;
-    testingcontroller.ForwardToTest(req, res);
+    if (compilerResponse.error) {
+      return res.status(400).send({ code_output: compilerResponse.error });
+    } else {
+      req.body.compiledCode = compilerResponse.output;
+      testingcontroller.ForwardToTest(req, res);
+    }
   });
 });
 

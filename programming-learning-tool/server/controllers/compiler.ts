@@ -7,6 +7,7 @@ export function ForwardToCompiler (req, res, callback)
 
         const { language } = req.params;
         const { codeArea } = req.body;
+        let helperValues = [2];
         console.log('Selected programming language:', language);
         console.log('Code:', codeArea);
       
@@ -22,7 +23,8 @@ export function ForwardToCompiler (req, res, callback)
       
         const data = JSON.stringify({
           language: language,
-          code: codeArea
+          code: codeArea,
+          helper_values: helperValues
         });
       
         const forwardRequest = http.request(options, (forwardResponse) => {
@@ -32,9 +34,8 @@ export function ForwardToCompiler (req, res, callback)
             responseData += chunk;
           });
       
-          
           forwardResponse.on('end', () => {
-            console.log('Response from container:', responseData);
+            console.log('Response from compile container:', responseData);
             const parsedResponse = JSON.parse(responseData);
             callback(parsedResponse);
           });

@@ -4,7 +4,7 @@ import {INGRESS_ADDRESS} from '../../.config/project.config';
 
 export function ForwardToTest(req, res) {
     const compiledCode = req.body.compiledCode;
-    const expec = ["Hello World\n"];
+    const expec = ["Hello World"];
     console.log('Code to test:', compiledCode);
 
 
@@ -31,7 +31,7 @@ export function ForwardToTest(req, res) {
         });
 
         forwardResponse.on('end', () => {
-            console.log('Response from container:', responseData);
+            console.log('Response from test container:', responseData);
             const parsedResponse = JSON.parse(responseData);
             const formattedResponse = {
                 code_output: parsedResponse.code_output?.trim(),
