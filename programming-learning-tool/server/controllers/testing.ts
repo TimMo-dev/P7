@@ -4,8 +4,9 @@ import {INGRESS_ADDRESS} from '../../.config/project.config';
 
 export function ForwardToTest(req, res) {
     const compiledCode = req.body.compiledCode;
-    const expec = ["Hello World"];
+    const expec = [4, 8, 10];
     console.log('Code to test:', compiledCode);
+    console.log('Expected output:', expec);
 
 
     const options = {

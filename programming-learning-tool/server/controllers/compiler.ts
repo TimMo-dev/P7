@@ -7,7 +7,7 @@ export function ForwardToCompiler (req, res, callback)
 
         const { language } = req.params;
         const { codeArea } = req.body;
-        let helperValues = [2];
+        let helperValues = [[2,2], [3, 5], [4, 8]];
         console.log('Selected programming language:', language);
         console.log('Code:', codeArea);
       
