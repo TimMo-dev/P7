@@ -9,15 +9,7 @@ def run_code():
     helperValues = request.json.get('helper_values')
 
     compileCodeTemplate = """
-import io
-import sys
-
-output = io.StringIO()
-sys.stdout = output
-sys.stderr = output
-
 def user_function(helper_value):
-    # Use globals() for dynamic variable creation
     if isinstance(helper_value, list):
         for i, value in enumerate(helper_value):
             globals()[f"helper_value_{{i}}"] = value
@@ -33,11 +25,7 @@ if __name__ == "__main__":
         helper_values = [helper_values]
     for value in helper_values:
         user_function(value)
-    sys.stdout = sys.__stdout__
-    sys.stderr = sys.__stderr__
-    output_list = output.getvalue().split('\\n')
-    for line in output_list:
-        print(line)
+
 """
 
     indentedUserCode = '\n    '.join(userCode.split('\n'))
