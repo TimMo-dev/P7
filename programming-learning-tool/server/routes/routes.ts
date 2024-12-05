@@ -14,14 +14,17 @@ server.use(express.json()); // Parse JSON bodies
 
 server.post('/compile/:language', (req, res) => {
   compilercontroller.ForwardToCompiler(req, res, (compilerResponse) => {
-    if (compilerResponse.error) {
-      return res.status(400).send({ code_output: compilerResponse.error });
+    const { output, error } = compilerResponse;
+    // Need to check for error length as the error property is always present
+    if (error && error.length > 0) {
+      return res.status(400).send({ code_output: error });
     } else {
-      req.body.compiledCode = compilerResponse.output;
+      req.body.compiledCode = output;
       testingcontroller.ForwardToTest(req, res);
     }
   });
 });
+
 
 server.get('/tasks', getTasks);
 server.get('/tasks/:id', getTaskById);

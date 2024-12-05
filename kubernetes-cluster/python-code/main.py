@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import subprocess
+import ast
 
 app = Flask(__name__)
 
@@ -25,21 +26,45 @@ if __name__ == "__main__":
         helper_values = [helper_values]
     for value in helper_values:
         user_function(value)
-
 """
 
     indentedUserCode = '\n    '.join(userCode.split('\n'))
     compileCode = compileCodeTemplate.format(userCode=indentedUserCode, helperValues=helperValues)
     
-    print("Generated Code:\n", compileCode)  # Debug print to check the generated code
+    print("Generated Code:\n", compileCode)
 
     try:
-        result = subprocess.run(['python', '-c', compileCode], capture_output=True, text=True, check=True)
-        output_list = [line for line in result.stdout.split('\n') if line.strip()]
-        return jsonify({'output': output_list, 'error': result.stderr})
+        result = subprocess.run(['python', '-c', compileCode], capture_output=True, text=True)
+        
+        output_list = []
+        for line in result.stdout.split('\n'):
+            line = line.strip()
+            if line:
+                try:
+                    # Try to parse the line as a Python literal
+                    output_list.append(ast.literal_eval(line))
+                except (ValueError, SyntaxError):
+                    output_list.append(line)
+        
+        error_list = [line.strip() for line in result.stderr.split('\n') if line.strip()]
+        
+        return jsonify({'output': output_list, 'error': error_list})
     except subprocess.CalledProcessError as e:
-        output_list = [line for line in e.stdout.split('\n') if line.strip()]
-        return jsonify({'output': output_list, 'error': e.stderr}), 400
+        # Handle subprocess errors
+        output_list = []
+        for line in e.stdout.split('\n'):
+            line = line.strip()
+            if line:
+                try:
+                    output_list.append(ast.literal_eval(line))
+                except (ValueError, SyntaxError):
+                    output_list.append(line)
+        
+        error_list = [line.strip() for line in e.stderr.split('\n') if line.strip()]
+        return jsonify({'output': output_list, 'error': error_list}), 400
+    except Exception as ex:
+        # Handle other exceptions
+        return jsonify({'output': [], 'error': [str(ex)]}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
