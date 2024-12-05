@@ -17,10 +17,21 @@ sys.stdout = output
 sys.stderr = output
 
 def user_function(helper_value):
+    # Use globals() for dynamic variable creation
+    if isinstance(helper_value, list):
+        for i, value in enumerate(helper_value):
+            globals()[f"helper_value_{{i}}"] = value
+    else:
+        globals()["helper_value_0"] = helper_value
+
+    # Dynamically execute user code
     {userCode}
 
 if __name__ == "__main__":
-    for value in {helperValues}:
+    helper_values = {helperValues}
+    if not isinstance(helper_values, list):
+        helper_values = [helper_values]
+    for value in helper_values:
         user_function(value)
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
@@ -43,4 +54,4 @@ if __name__ == "__main__":
         return jsonify({'output': output_list, 'error': e.stderr}), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8080)
