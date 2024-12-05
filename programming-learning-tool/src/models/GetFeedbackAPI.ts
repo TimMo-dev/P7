@@ -26,6 +26,11 @@ Make sure to:
 - Keep the response short.
 - Avoid criticizing if nothing noteworthy is bad about the implementation.
 - Do not do further elaboration on something the user did correctly.
+- Avoid repeating feedback as much as possible.
+- Never repeat previously said sentences! Always attempt to say your feedback in a new way.
+
+If the user prompts with the same solution multiple times, the user needs furhter guidance.
+In that case, make sure your response is becomes more helpful each consecutive response.
 
 Here's an example of what your feedback should look like:
 The prompt you receive:
@@ -59,11 +64,11 @@ export async function GET_llama_response(task_description:string, programming_la
   const llama_api_key = import.meta.env.VITE_LLAMA_API_KEY;
   
   const llama = new LlamaAI(llama_api_key);
-  
+
   let user_prompt = `
   Task Description: "${task_description}",
   Programming Language: "${programming_language}",
-  Solution Attempt: "${solution_attempt}"
+  Solution Attempt: "${solution_attempt}",
   `;
 
   return get_response(user_prompt, llama);
@@ -75,7 +80,7 @@ async function get_response(user_prompt: string, llama: LlamaAI): Promise<string
 
   // Create the API request with the model specified
   const apiRequestJson = {
-    model: "llama3.1-70b", // Specify the model here
+    model: "llama3.1-405b", // Specify the model here
     messages: conversation_history
   };
 

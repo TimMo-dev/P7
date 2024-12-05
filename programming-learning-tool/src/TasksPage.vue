@@ -6,7 +6,7 @@ import LangButton from './components/LangButton.vue';
 import TaskButton from './components/TaskButton.vue';
 
 const selectedLanguage = ref<string | null>(null);
-const tasks = ref<Array<{ title: string, description: string, taskid: number }>>([]);
+const tasks = ref<Array<{ title: string, description: string, id: number }>>([]);
 
 const router = useRouter();
 
@@ -60,10 +60,10 @@ onMounted(() => {
         <div class="mx-4 my-10">
           <TaskButton
             v-for="task in tasks"
-            :key="task.taskid"
+            :key="task.id"
             :title="task.title"
             :content="task.description"
-            :taskId="task.taskid"
+            :taskId="task.id"
             @navigate="navigateToSolution"
           />
         </div>

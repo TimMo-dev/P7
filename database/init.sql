@@ -1,20 +1,23 @@
-CREATE TABLE IF NOT EXISTS Programming_task(
+-- Whole file is deprecated.
+
+CREATE TABLE IF NOT EXISTS Programming_Task(
     title VARCHAR(50),
     description TEXT, 
-    preDefVars TEXT,
-    taskid SERIAL PRIMARY KEY;
+    taskid SERIAL PRIMARY KEY
+    fk_test_case_id INTEGER REFERENCES Test_Suite
 );
  
-CREATE TABLE IF NOT EXISTS Tests (
+CREATE TABLE IF NOT EXISTS Test_Suite (
     test_case_id INTEGER PRIMARY KEY,
-    taskid INTEGER REFERENCES Programming_task
+    description TEXT,
+    fk_programming_task_id INTEGER REFERENCES Programming_task
 );
 
-CREATE TABLE IF NOT EXISTS Test_Output (
-    output_id INTEGER PRIMARY KEY, 
-    test_case_id INTEGER REFERENCES Tests,    
-    output_description VARCHAR(50),
-    expected_output VARCHAR(50)
+CREATE TABLE IF NOT EXISTS Test (
+    test_id INTEGER PRIMARY KEY,
+    fk_test_suite_id INTEGER REFERENCES Test_Suite,
+    test_input varchar (50),
+    expected_output varchar(50)
 );
 
 INSERT INTO Programming_task (title, description, preDefVar, ) VALUES

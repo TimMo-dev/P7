@@ -1,19 +1,13 @@
-import pg from 'pg';
+import {AppDataSource} from "../data-source.ts";
+import {Programming_Task} from "../models/ProgrammingTask.ts";
 
-const pool = new pg.Pool({
-  user: 'user',
-  host: 'localhost',
-  database: 'database',
-  password: 'password',
-  port: 5431,
-});
+const task = AppDataSource.getRepository(Programming_Task)
 
 export async function getTasks(req, res) {
   try {
     console.log('Fetching tasks from the database...');
-    const result = await pool.query('SELECT * FROM Programming_task');
-    console.log('Tasks fetched successfully:', result.rows);
-    res.json(result.rows);
+    const result = await task.find()
+    res.json(result);
   } catch (err) {
     console.error('Error fetching tasks:', err);
     res.status(500).send('Server error');
@@ -21,18 +15,13 @@ export async function getTasks(req, res) {
 }
 
 export async function getTaskById(req, res) {
-  const { id } = req.params;
+  const { id } =  req.params;
   try {
     console.log(`Fetching task with ID ${id} from the database...`);
-    const result = await pool.query('SELECT * FROM Programming_task WHERE taskid = $1', [id]);
-    if (result.rows.length > 0) {
-      console.log('Task fetched successfully:', result.rows[0]);
-      res.json(result.rows[0]);
-    } else {
-      res.status(404).send('Task not found');
+    const result = await task.findOne({ where: { id: Number(id) } })
+    res.json(result)
     }
-  } catch (err) {
-    console.error('Error fetching task:', err);
-    res.status(500).send('Server error');
-  }
+    catch (err) {
+    console.error(`Error fetching task ID: ${id}`, err);
+    }
 }

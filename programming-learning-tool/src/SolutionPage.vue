@@ -19,7 +19,9 @@ const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
 const terminalOutput = ref<string>('');
-const feedbackOutput = ref<string>('');
+const feedbacks = ref<string[]>([]);  
+const selectedFeedback = ref<string | null>(null);
+const feedbackOutput = ref<string>("");
 
 // Default code snippet
 const defaultCode = `# Write your code here\nprint("Hello, World!")`;
@@ -41,7 +43,9 @@ const submitCode = async (): Promise<void> => {
 
 const GetFeedback = async (): Promise<void> => {
   if (task.value?.description) {
-    feedbackOutput.value = await GetFeedbackAPI.GET_llama_response(task.value?.description, selectedProgLanguage.value, editor.getValue())
+    let feedback:string = await GetFeedbackAPI.GET_llama_response(task.value?.description, selectedProgLanguage.value, editor.getValue())
+    feedbacks.value.push(feedback);
+    toggleFeedbackOutput(feedback);
   }
 };
 
@@ -73,6 +77,12 @@ const fetchTaskDetails = async (taskId: number) => {
   } catch (error) {
     console.error('Error fetching task details:', error);
   }
+};
+
+// Toggle feedback output based on the button clicked
+const toggleFeedbackOutput = (feedback: string) => {
+  feedbackOutput.value = feedback;
+  selectedFeedback.value = feedback;
 };
 
 // Initialize the Monaco Editor when the component is mounted
@@ -125,7 +135,7 @@ function navigate(path: string) {
     <div class="solution-buttons">
       <!-- Left Top Container -->
       <div class="container-buttons items-center justify-between">
-        <button type="button" class="button m-2" @click="navigate('/home')">
+        <button type="button" class="button bg-gray-500 hover:bg-gray-700 m-2" @click="navigate('/home')">
           <i class="fa fa-arrow-left text-xl" aria-hidden="true"></i>
         </button>
         <div class="ml-auto mr-2"> Programming Language: </div>
@@ -158,14 +168,14 @@ function navigate(path: string) {
 
       <!-- Right Top Container -->
       <div class="container-buttons">
-        <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        <button type="button" class="button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           @click="submitCode">
           Submit
         </button>
-        <button type="button" class="button mx-2 text-white font-bold">
+        <button type="button" class="button bg-gray-500 hover:bg-gray-700 mx-2 text-white font-bold">
           Run
         </button>
-        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="GetFeedback">
+        <button type="button" class="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="GetFeedback">
           Get Feedback
         </button>
       </div>
@@ -229,20 +239,33 @@ function navigate(path: string) {
           <!-- Left Bottom Container -->
           <VerticalResizablePanels>
             <template v-slot:left>
-              <div class="bottom-container relative">
+              <div class="bottom-container ml-2 relative flex flex-col h-full">
                 <a class="absolute-text">
                   Feedback:
                 </a>
-                <div class="bg-white h-full overflow-y-auto">
+                <div class="bg-white flex-1 overflow-y-auto">
                   <div class="mx-4 my-8">
                     {{ feedbackOutput }}
                   </div>
-                </div>
+                  <div class="flex-grow"></div>
+                  <div class="flex space-x-0.5 overflow-x-auto absolute bottom-0 left-0 right-0 m-2 bg-white">
+                    <button 
+                      v-for="(feedback, index) in feedbacks" :key="index" 
+                      @click="toggleFeedbackOutput(feedback)"
+                      type="button" class="button text-white text-xs font-semibold z-10"
+                      :class="{
+                      'bg-gray-500 hover:bg-gray-700': selectedFeedback !== feedback,
+                      'bg-blue-500 hover:bg-blue-700': selectedFeedback === feedback
+                      }">
+                      Feedback-{{index + 1}}
+                    </button>
+                  </div>
               </div>
+            </div>
             </template>
             <!-- Right Bottom Container -->
             <template v-slot:right>
-              <div class="bottom-container relative">
+              <div class="bottom-container mr-2 relative">
                 <a class="absolute-text">
                   Output:
                 </a>
