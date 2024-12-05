@@ -39,7 +39,7 @@
 }
 
 .bottom-container {
-  @apply flex-grow bg-gray-200 m-2 p-2 h-full;
+  @apply flex-grow bg-gray-200 p-2 h-full;
 }
 
 .bottom-containers-wrapper {
@@ -55,7 +55,7 @@
 }
 
 .button {
-  @apply text-white py-0 px-2 my-0 mr-2 max-w-20 text-center bg-gray-500 shadow-sm border border-transparent rounded hover:bg-gray-700;
+  @apply text-white py-0 px-2 my-0 text-center shadow-sm border border-transparent rounded whitespace-nowrap;
 }
 
 .border-test {
