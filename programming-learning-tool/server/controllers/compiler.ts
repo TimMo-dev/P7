@@ -5,10 +5,8 @@ import {INGRESS_ADDRESS, INGRESS_PORT} from '../../.config/project.config';
 export function ForwardToCompiler(req, res, callback) {
 
     const {language} = req.params;
-    const {codeArea} = req.body;
-    const {taskID} = req.body
+    const {codeArea, helperValues} = req.body;
 
-    let helperValues = [[2, 2], [3, 5], [4, 8]];
     console.log('Selected programming language:', language);
     console.log('Code:', codeArea);
 

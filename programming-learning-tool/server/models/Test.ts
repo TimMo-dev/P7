@@ -7,20 +7,18 @@ import {Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "
 import {Test_Suite} from "./Test_Suite.ts";
 
 @Entity()
-export class Test
-{
+export class Test {
     //wip as we have to figure out how the tests should be in relation to the generic test containers. 
     @PrimaryColumn("int")
-    id: number
+    id: number;
 
-    @Column("text")
-    test_input: string;
+    // Use simple-json for flexible mixed-type lists - postgresql has native support for json
+    @Column("simple-json")
+    test_input: (string | number | boolean | object)[];
 
-    @Column("text")
-    expected_output: string;
+    @Column("simple-json")
+    expected_output: (string | number | boolean | object)[];
 
-    @ManyToOne(()=>Test_Suite, (Test_Suite)=>Test_Suite.tests)
-    test_suite: Test_Suite
-
-
+    @ManyToOne(() => Test_Suite, (Test_Suite) => Test_Suite.tests)
+    test_suite: Test_Suite;
 }
