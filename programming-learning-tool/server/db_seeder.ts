@@ -31,19 +31,19 @@ export function seed_db() {
     const t2_1 = new Test()
     t2_1.id = 1
     t2_1.test_input = [2, 2]
-    t2_1.expected_output = [4]
+    t2_1.expected_output = 4
     t2_1.test_suite = ts2
 
     const t2_2 = new Test()
     t2_2.id = 2
     t2_2.test_input = [3, 3]
-    t2_2.expected_output = [6]
+    t2_2.expected_output = 6
     t2_2.test_suite = ts2
 
     const t2_3 = new Test()
     t2_3.id = 3
     t2_3.test_input = [4, 7]
-    t2_3.expected_output = [11]
+    t2_3.expected_output = 11
     t2_3.test_suite = ts2
 
     ts2.tests = [t2_1, t2_2, t2_3]

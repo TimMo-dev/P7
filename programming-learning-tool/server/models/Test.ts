@@ -14,10 +14,10 @@ export class Test {
 
     // Use simple-json for flexible mixed-type lists - postgresql has native support for json
     @Column("simple-json")
-    test_input: (string | number | boolean | object)[];
+    test_input: (string | number | boolean | object) | (string | number | boolean | object)[];
 
     @Column("simple-json")
-    expected_output: (string | number | boolean | object)[];
+    expected_output: (string | number | boolean | object) | (string | number | boolean | object)[];
 
     @ManyToOne(() => Test_Suite, (Test_Suite) => Test_Suite.tests)
     test_suite: Test_Suite;
