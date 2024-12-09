@@ -19,9 +19,10 @@ const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
 const clusterOutput = ref<Array<{ code_output: string, passed_tests: string, failed_tests: string }>>([]);
-const feedbacks = ref<string[]>([]);  
+const feedbacks = ref<string[]>([]);
 const selectedFeedback = ref<string | null>(null);
 const feedbackOutput = ref<string>("");
+const selectedTaskID = ref<number | null>(null);
 
 // Default code snippet
 const defaultCode = `# Write your code here\nprint("Hello, World!")`;
@@ -38,11 +39,15 @@ const monacoContainer = ref<HTMLDivElement | null>(null);
 let editor: monaco.editor.IStandaloneCodeEditor;
 
 const submitCode = async (): Promise<void> => {
-  const result = await SubmitCodeAPI.POST_code(codeAreaContent.value, selectedProgLanguage.value, isSubmitDisabled.value, editor);
-  if (typeof result === 'string') {
-    console.error(result);
+  if (selectedTaskID.value !== null) {
+    const result = await SubmitCodeAPI.POST_code(codeAreaContent.value, selectedProgLanguage.value, selectedTaskID.value, isSubmitDisabled.value, editor);
+    if (typeof result === 'string') {
+      console.error(result);
+    } else {
+      clusterOutput.value = [result];
+    }
   } else {
-    clusterOutput.value = [result];
+    console.error('Task ID is null');
   }
 };
 
@@ -95,6 +100,7 @@ onMounted(async () => {
   // Fetch task details
   const route = useRoute();
   const taskId = route.query.id;
+  selectedTaskID.value = taskId ? Number(taskId) : null;
   if (taskId) {
     await fetchTaskDetails(Number(taskId));
   }
@@ -254,8 +260,8 @@ function navigate(path: string) {
                   </div>
                   <div class="flex-grow"></div>
                   <div class="flex space-x-0.5 overflow-x-auto absolute bottom-0 left-0 right-0 m-2 bg-white">
-                    <button 
-                      v-for="(feedback, index) in feedbacks" :key="index" 
+                    <button
+                      v-for="(feedback, index) in feedbacks" :key="index"
                       @click="toggleFeedbackOutput(feedback)"
                       type="button" class="button text-white text-xs font-semibold z-10"
                       :class="{

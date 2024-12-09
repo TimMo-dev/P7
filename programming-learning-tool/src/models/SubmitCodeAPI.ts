@@ -9,11 +9,14 @@ let codeAreaContent:string = '';
 let selectedProgLanguage:string = 'Select'; // Default button text
 let isSubmitDisabled = computed(() => selectedProgLanguage === 'Select');
 
-export async function POST_code(codeAreaContent:string, selectedProgLanguage:string, isSubmitDisabled:boolean, 
-                                editor:monaco.editor.IStandaloneCodeEditor | null) {
+export async function POST_code(codeAreaContent: string, selectedProgLanguage: string, selectedTaskID: number | null, isSubmitDisabled: boolean,
+                                editor: monaco.editor.IStandaloneCodeEditor | null) {
     if (isSubmitDisabled) {
       alert('Please select a programming language before submitting.');
       return;
+    }
+    if (selectedTaskID === null) {
+      throw new Error('Task ID is null');
     }
     try {
       // Get the code content from the editor
@@ -23,7 +26,8 @@ export async function POST_code(codeAreaContent:string, selectedProgLanguage:str
   
       // Construct the request body
       const body = JSON.stringify({
-        codeArea: codeAreaContent
+        codeArea: codeAreaContent,
+        taskID: selectedTaskID
       });
   
       // Make a POST request to the /compile/:language endpoint with codeAreaContent in the body
