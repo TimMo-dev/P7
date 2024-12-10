@@ -1,5 +1,5 @@
 import http from 'http';
-import {INGRESS_ADDRESS} from '../../.config/project.config';
+import {INGRESS_ADDRESS, INGRESS_PORT} from '../../.config/project.config';
 
 
 export function ForwardToTest(req, res) {
@@ -11,7 +11,7 @@ export function ForwardToTest(req, res) {
 
     const options = {
         hostname: INGRESS_ADDRESS,
-        port: 8088,
+        port: INGRESS_PORT,
         path: `/test/code`,
         method: 'POST',
         headers: {

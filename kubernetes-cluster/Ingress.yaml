@@ -23,3 +23,10 @@ spec:
                 name: c-interpreter-service
                 port:
                   number: 80
+          - path: /test/code
+            pathType: Prefix
+            backend:
+              service:
+                name: testing-service
+                port:
+                  number: 80

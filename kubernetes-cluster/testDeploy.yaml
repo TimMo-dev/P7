@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testing-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testing-pods
+  template:
+    metadata:
+      labels:
+        app: testing-pods
+    spec:
+      containers:
+        - name: testing-container
+          image: testing-container:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+
