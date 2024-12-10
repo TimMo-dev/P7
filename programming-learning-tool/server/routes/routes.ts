@@ -22,7 +22,7 @@ server.post('/compile/:language', async (req, res) => {
         const {output, error} = compilerResponse;
         // Need to check for error length as the error property is always present
         if (error && error.length > 0) {
-            return res.status(400).send({code_output: error});
+            res.send({code_error: error});
         } else {
             req.body.compiledCode = output;
             testingcontroller.ForwardToTest(req, res);

@@ -30,12 +30,12 @@ if __name__ == "__main__":
 
     indentedUserCode = '\n    '.join(userCode.split('\n'))
     compileCode = compileCodeTemplate.format(userCode=indentedUserCode, helperValues=helperValues)
-    
+
     print("Generated Code:\n", compileCode)
 
     try:
         result = subprocess.run(['python', '-c', compileCode], capture_output=True, text=True)
-        
+
         output_list = []
         for line in result.stdout.split('\n'):
             line = line.strip()
@@ -45,10 +45,10 @@ if __name__ == "__main__":
                     output_list.append(ast.literal_eval(line))
                 except (ValueError, SyntaxError):
                     output_list.append(line)
-        
-        error_list = [line.strip() for line in result.stderr.split('\n') if line.strip()]
-        
-        return jsonify({'output': output_list, 'error': error_list})
+
+        error_string = result.stderr.strip()
+
+        return jsonify({'output': output_list, 'error': error_string})
     except subprocess.CalledProcessError as e:
         # Handle subprocess errors
         output_list = []
@@ -59,12 +59,12 @@ if __name__ == "__main__":
                     output_list.append(ast.literal_eval(line))
                 except (ValueError, SyntaxError):
                     output_list.append(line)
-        
-        error_list = [line.strip() for line in e.stderr.split('\n') if line.strip()]
-        return jsonify({'output': output_list, 'error': error_list}), 400
+
+        error_string = e.stderr.strip()
+        return jsonify({'output': output_list, 'error': error_string}), 400
     except Exception as ex:
         # Handle other exceptions
-        return jsonify({'output': [], 'error': [str(ex)]}), 500
+        return jsonify({'output': [], 'error': str(ex)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8080)
