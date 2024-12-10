@@ -18,7 +18,7 @@ const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
-const clusterOutput = ref<Array<{ code_output: string, passed_tests: string, failed_tests: string }>>([]);
+const clusterOutput = ref<Array<{ code_output: string, code_error: string, passed_tests: string , failed_tests: string }>>([]);
 const feedbacks = ref<string[]>([]);
 const selectedFeedback = ref<string | null>(null);
 const feedbackOutput = ref<string>("");
@@ -284,6 +284,7 @@ function navigate(path: string) {
                   <div class="mx-4 my-8">
                     <div v-for="output in clusterOutput" :key="output.code_output">
                       <p>Code Output: {{ output.code_output }}</p>
+                      <p>Error: {{ output.code_error }}</p>
                       <p>Passed Tests: {{ output.passed_tests }}</p>
                       <p>Failed Tests: {{ output.failed_tests }}</p>
                     </div>
