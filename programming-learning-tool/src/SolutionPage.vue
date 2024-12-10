@@ -217,7 +217,7 @@ function navigate(path: string) {
                 <div class="white-scrollable">
                   <div v-if="task" class="mx-4 my-8">
                    <div class="task-item-title">{{ task.title }}</div>
-                    <div>{{ task.description }}</div>
+                    <div v-html="task.description.replace(/\n/g, '<br>')"></div>
                   </div>
                   <div v-else>
                     <p>No task found!</p>
