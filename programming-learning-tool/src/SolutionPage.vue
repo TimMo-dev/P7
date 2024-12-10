@@ -18,7 +18,18 @@ const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
-const clusterOutput = ref<Array<{ code_output: string, code_error: string, passed_tests: string , failed_tests: string }>>([]);
+// const clusterOutput = ref<Array<{ code_output: string, code_error: string, passed_tests: string , failed_tests: string }>>([]);
+const clusterOutput = ref<{
+  code_output: string;
+  code_error: string;
+  passed_tests: string[];
+  failed_tests: string[];
+}>({
+  code_output: '',
+  code_error: '',
+  passed_tests: [],
+  failed_tests: []
+});
 const feedbacks = ref<string[]>([]);
 const selectedFeedback = ref<string | null>(null);
 const feedbackOutput = ref<string>("");
@@ -44,7 +55,7 @@ const submitCode = async (): Promise<void> => {
     if (typeof result === 'string') {
       console.error(result);
     } else {
-      clusterOutput.value = [result];
+      clusterOutput.value = result;
     }
   } else {
     console.error('Task ID is null');
@@ -282,12 +293,16 @@ function navigate(path: string) {
                 </a>
                 <div class="bg-white h-full overflow-y-auto">
                   <div class="mx-4 my-8">
-                    <div v-for="output in clusterOutput" :key="output.code_output">
-                      <p>Code Output: {{ output.code_output }}</p>
-                      <p>Error: {{ output.code_error }}</p>
-                      <p>Passed Tests: {{ output.passed_tests }}</p>
-                      <p>Failed Tests: {{ output.failed_tests }}</p>
-                    </div>
+                    <p>Code Output: {{ clusterOutput.code_output }}</p>
+                    <p>Error: {{ clusterOutput.code_error }}</p>
+                    <p>Passed Tests:</p>
+                    <ul>
+                      <li v-for="(test, index) in clusterOutput.passed_tests" :key="index">{{ test }}</li>
+                    </ul>
+                    <p>Failed Tests:</p>
+                    <ul>
+                      <li v-for="(test, index) in clusterOutput.failed_tests" :key="index">{{ test }}</li>
+                    </ul>
                   </div>
                 </div>
               </div>

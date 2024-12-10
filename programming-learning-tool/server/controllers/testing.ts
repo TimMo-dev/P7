@@ -35,7 +35,7 @@ export function ForwardToTest(req, res) {
             console.log('Response from test container:', responseData);
             const parsedResponse = JSON.parse(responseData);
             const formattedResponse = {
-                code_output: parsedResponse.code_output?.trim(),
+                code_output: compiledCode,
                 passed_tests: parsedResponse.passed_tests,
                 failed_tests: parsedResponse.failed_tests
             };
