@@ -21,11 +21,13 @@ const selectedProgLanguage = ref<string>('Select'); // Default button text
 // const clusterOutput = ref<Array<{ code_output: string, code_error: string, passed_tests: string , failed_tests: string }>>([]);
 const clusterOutput = ref<{
   code_output: string;
+  expected_output: string;
   code_error: string;
   passed_tests: string[];
   failed_tests: string[];
 }>({
   code_output: '',
+  expected_output: '',
   code_error: '',
   passed_tests: [],
   failed_tests: []
@@ -294,6 +296,7 @@ function navigate(path: string) {
                 <div class="bg-white h-full overflow-y-auto">
                   <div class="mx-4 my-8">
                     <p>Code Output: {{ clusterOutput.code_output }}</p>
+                    <p>Expected Output: {{ clusterOutput.expected_output }}</p>
                     <p>Error: {{ clusterOutput.code_error }}</p>
                     <p>Passed Tests:</p>
                     <ul>

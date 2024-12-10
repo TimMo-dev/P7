@@ -50,6 +50,7 @@ export async function POST_code(codeAreaContent: string, selectedProgLanguage: s
         // Check if there is an error in the response
         const output = {
             code_output: '',
+            expected_output: '',
             code_error: '',
             passed_tests: [] as string[],
             failed_tests: [] as string[]
@@ -60,6 +61,7 @@ export async function POST_code(codeAreaContent: string, selectedProgLanguage: s
             return output;
         } else {
             output.code_output = result.forwardedResponse.code_output;
+            output.expected_output = result.forwardedResponse.expected_output;
             output.passed_tests = result.forwardedResponse.passed_tests;
             output.failed_tests = result.forwardedResponse.failed_tests;
             return output;
