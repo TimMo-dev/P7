@@ -50,9 +50,9 @@ export async function POST_code(codeAreaContent: string, selectedProgLanguage: s
         // Check if there is an error in the response
         const output = {
             code_output: '',
-            passed_tests: '',
-            failed_tests: '',
-            code_error: ''
+            code_error: '',
+            passed_tests: [] as string[],
+            failed_tests: [] as string[]
         }
         if (result.code_error) {
             console.error('Error submitting code:', result);
