@@ -58,19 +58,19 @@ export function seed_db() {
     ts3.id = 2
 
     const t3_1 = new Test();
-    t3_1.id = 1;
+    t3_1.id = 4;
     t3_1.test_input = [15];
     t3_1.expected_output = [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"];
     t3_1.test_suite = ts3;
     
     const t3_2 = new Test();
-    t3_2.id = 2;
+    t3_2.id = 5;
     t3_2.test_input = [5];
     t3_2.expected_output = [1, 2, "Fizz", 4, "Buzz"];
-    t3_2.test_suite = ts2;
+    t3_2.test_suite = ts3;
     
     const t3_3 = new Test();
-    t3_3.id = 3;
+    t3_3.id = 6;
     t3_3.test_input = [3];
     t3_3.expected_output = [1, 2, "Fizz"];
     t3_3.test_suite = ts3;
