@@ -61,7 +61,7 @@ export function seed_db() {
     t3_1.id = 1;
     t3_1.test_input = [15];
     t3_1.expected_output = [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"];
-    t3_1.test_suite = ts1;
+    t3_1.test_suite = ts3;
     
     const t3_2 = new Test();
     t3_2.id = 2;
@@ -82,7 +82,7 @@ export function seed_db() {
     p3.title = "FizzBuzz Implementation";
     p3.description = 'Write a program that takes an integer n and prints the numbers from 1 to n.\n' +
     'However, for multiples of 3, print "Fizz" instead of the number, and for the multiples of 5, print "Buzz".\n' +
-    'For numbers which are multiples of both 3 and 5, print "FizzBuzz".\n\n The output should be a list of strings where each element corresponds to the result for numbers from 1 to n.\n\n' +
+    'For numbers which are multiples of both 3 and 5, print "FizzBuzz".\n\n The output should be a list where each element corresponds to the result for numbers from 1 to n.\n\n' +
     'Use helper_value_0 as the input for n.';
     p3.tests = ts3
 
