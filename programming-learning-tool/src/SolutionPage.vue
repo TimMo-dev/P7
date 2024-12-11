@@ -18,10 +18,24 @@ const serverHost: string = `http://${SERVER_ADDRESS}:${SERVER_PORT}`;
 // Declare reactive variables to store the textarea content and selected programming language
 const codeAreaContent = ref<string>('');
 const selectedProgLanguage = ref<string>('Select'); // Default button text
-const terminalOutput = ref<string>('');
-const feedbacks = ref<string[]>([]);  
+// const clusterOutput = ref<Array<{ code_output: string, code_error: string, passed_tests: string , failed_tests: string }>>([]);
+const clusterOutput = ref<{
+  code_output: string;
+  expected_output: string;
+  code_error: string;
+  passed_tests: string[];
+  failed_tests: string[];
+}>({
+  code_output: '',
+  expected_output: '',
+  code_error: '',
+  passed_tests: [],
+  failed_tests: []
+});
+const feedbacks = ref<string[]>([]);
 const selectedFeedback = ref<string | null>(null);
 const feedbackOutput = ref<string>("");
+const selectedTaskID = ref<number | null>(null);
 
 // Default code snippet
 const defaultCode = `# Write your code here\nprint("Hello, World!")`;
@@ -38,7 +52,16 @@ const monacoContainer = ref<HTMLDivElement | null>(null);
 let editor: monaco.editor.IStandaloneCodeEditor;
 
 const submitCode = async (): Promise<void> => {
-  terminalOutput.value = await SubmitCodeAPI.POST_code(codeAreaContent.value, selectedProgLanguage.value, isSubmitDisabled.value, editor)
+  if (selectedTaskID.value !== null) {
+    const result = await SubmitCodeAPI.POST_code(codeAreaContent.value, selectedProgLanguage.value, selectedTaskID.value, isSubmitDisabled.value, editor);
+    if (typeof result === 'string') {
+      console.error(result);
+    } else {
+      clusterOutput.value = result;
+    }
+  } else {
+    console.error('Task ID is null');
+  }
 };
 
 const GetFeedback = async (): Promise<void> => {
@@ -90,6 +113,7 @@ onMounted(async () => {
   // Fetch task details
   const route = useRoute();
   const taskId = route.query.id;
+  selectedTaskID.value = taskId ? Number(taskId) : null;
   if (taskId) {
     await fetchTaskDetails(Number(taskId));
   }
@@ -193,7 +217,7 @@ function navigate(path: string) {
                 <div class="white-scrollable">
                   <div v-if="task" class="mx-4 my-8">
                    <div class="task-item-title">{{ task.title }}</div>
-                    <div>{{ task.description }}</div>
+                    <div v-html="task.description.replace(/\n/g, '<br>')"></div>
                   </div>
                   <div v-else>
                     <p>No task found!</p>
@@ -249,8 +273,8 @@ function navigate(path: string) {
                   </div>
                   <div class="flex-grow"></div>
                   <div class="flex space-x-0.5 overflow-x-auto absolute bottom-0 left-0 right-0 m-2 bg-white">
-                    <button 
-                      v-for="(feedback, index) in feedbacks" :key="index" 
+                    <button
+                      v-for="(feedback, index) in feedbacks" :key="index"
                       @click="toggleFeedbackOutput(feedback)"
                       type="button" class="button text-white text-xs font-semibold z-10"
                       :class="{
@@ -271,7 +295,17 @@ function navigate(path: string) {
                 </a>
                 <div class="bg-white h-full overflow-y-auto">
                   <div class="mx-4 my-8">
-                    Output from terminal: {{ terminalOutput }}
+                    <p>Code Output: {{ clusterOutput.code_output }}</p>
+                    <p>Expected Output: {{ clusterOutput.expected_output }}</p>
+                    <p>Error: {{ clusterOutput.code_error }}</p>
+                    <p>Passed Tests:</p>
+                    <ul>
+                      <li v-for="(test, index) in clusterOutput.passed_tests" :key="index">{{ test }}</li>
+                    </ul>
+                    <p>Failed Tests:</p>
+                    <ul>
+                      <li v-for="(test, index) in clusterOutput.failed_tests" :key="index">{{ test }}</li>
+                    </ul>
                   </div>
                 </div>
               </div>

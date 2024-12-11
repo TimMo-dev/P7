@@ -146,7 +146,7 @@
 }
 
 .task-item-content {
-  @apply w-full text-ellipsis text-sm font-semibold text-gray-800;
+  @apply w-full text-ellipsis text-sm font-semibold text-gray-800 whitespace-pre-line;
 }
 
 /*used to lock the navbar without moving all components down which creates an unnecessary scroll whell*/
